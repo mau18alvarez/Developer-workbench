@@ -22,7 +22,8 @@ public class Main extends Application {
         Main.primaryStage.setTitle("Developer Workbench");
 
         showMainPane();
-        showLogInPane();
+        showExperiment();
+
     }
 
     public void showMainPane() throws IOException {
@@ -34,6 +35,11 @@ public class Main extends Application {
 
     public void showLogInPane() throws IOException {
         Pane logInPane = FXMLLoader.load(getClass().getResource("/LogIn/login_panel.fxml"));
+        mainLayout.setCenter(logInPane);
+    }
+
+    public void showExperiment() throws IOException {
+        BorderPane logInPane = FXMLLoader.load(getClass().getResource("../UI/editor/editor.fxml"));
         mainLayout.setCenter(logInPane);
     }
 

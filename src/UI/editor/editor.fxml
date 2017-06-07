@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="aBorderPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="aBorderPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.editor.Editor">
     <padding>
         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
     </padding>
@@ -50,7 +50,7 @@
                         </VBox>
                      </bottom>
                      <left>
-                        <TreeView prefHeight="495.0" prefWidth="252.0" BorderPane.alignment="CENTER" />
+                        <TreeView id="leftmenu" fx:id="leftmenu" prefHeight="495.0" prefWidth="252.0" BorderPane.alignment="CENTER" />
                      </left>
                   </BorderPane>
                </content>
