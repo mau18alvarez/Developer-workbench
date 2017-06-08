@@ -15,6 +15,9 @@ public class Main extends Application {
     private static Stage primaryStage;
     private static BorderPane mainLayout;
 
+    public static String ip = null;
+    public static String puerto = null;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -22,7 +25,8 @@ public class Main extends Application {
         Main.primaryStage.setTitle("Developer Workbench");
 
         showMainPane();
-        showExperiment();
+        showLogInPane();
+
 
     }
 
@@ -38,8 +42,8 @@ public class Main extends Application {
         mainLayout.setCenter(logInPane);
     }
 
-    public void showExperiment() throws IOException {
-        BorderPane logInPane = FXMLLoader.load(getClass().getResource("../UI/editor/editor.fxml"));
+    public static void showMenu() throws IOException {
+        BorderPane logInPane = FXMLLoader.load(Main.class.getResource("../UI/editor/editor.fxml"));
         mainLayout.setCenter(logInPane);
     }
 
