@@ -1,12 +1,21 @@
 package sample;
 
+import java.net.URL;
 import java.util.Random;
+import java.util.ResourceBundle;
+
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
@@ -24,84 +33,87 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 
-public class JavaFXDynTable extends Application {
+public class JavaFXDynTable implements Initializable {
 
     private TableView tableView = new TableView();
-    private Button btnNew = new Button("New Record");
+    private Button btnNew = new Button("Add Table Attribute");
+    private Button btnReady = new Button("Ready");
+    private TextField tableName = new TextField();
+    final BooleanProperty firstTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
+
+    @FXML VBox tableVbox;
 
     static Random random = new Random();
 
     static final String Day[] = {
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"};
+            "Name",
+            "Data Type",
+            "IsRequired",
+            "Referencing"};
 
-    public static class Record {
-        private final SimpleIntegerProperty id;
-        private final SimpleIntegerProperty value_0;
-        private final SimpleIntegerProperty value_1;
-        private final SimpleIntegerProperty value_2;
-        private final SimpleIntegerProperty value_3;
-        private final SimpleIntegerProperty value_4;
+    public static class Record<T> {
+        private T id;
+        private T value_0;
+        private T value_1;
+        private T value_2;
+        private T value_3;
+        private T value_4;
 
-        Record(int i, int v0, int v1, int v2, int v3,
-               int v4) {
-            this.id = new SimpleIntegerProperty(i);
-            this.value_0 = new SimpleIntegerProperty(v0);
-            this.value_1 = new SimpleIntegerProperty(v1);
-            this.value_2 = new SimpleIntegerProperty(v2);
-            this.value_3 = new SimpleIntegerProperty(v3);
-            this.value_4 = new SimpleIntegerProperty(v4);
+        Record(T i, T v0, T v1, T v2, T v3, T v4) {
+            this.id = i;
+            this.value_0 = v0;
+            this.value_1 = v1;
+            this.value_2 = v2;
+            this.value_3 = v3;
+            this.value_4 = v4;
         }
 
-        public int getId() {
-            return id.get();
+        public T getId() {
+            return id;
         }
 
-        public void setId(int v) {
-            id.set(v);
+        public void setId(T v) {
+            id = v;
         }
 
-        public int getValue_0() {
-            return value_0.get();
+        public T getValue_0() {
+            return value_0;
         }
 
-        public void setValue_0(int v) {
-            value_0.set(v);
+        public void setValue_0(T v) {
+            value_0 = v;
         }
 
-        public int getValue_1() {
-            return value_1.get();
+        public T getValue_1() {
+            return value_1;
         }
 
-        public void setValue_1(int v) {
-            value_1.set(v);
+        public void setValue_1(T v) {
+            value_1 = v;
         }
 
-        public int getValue_2() {
-            return value_2.get();
+        public T getValue_2() {
+            return value_2;
         }
 
-        public void setValue_2(int v) {
-            value_2.set(v);
+        public void setValue_2(T v) {
+            value_2 = v;
         }
 
-        public int getValue_3() {
-            return value_3.get();
+        public T getValue_3() {
+            return value_3;
         }
 
-        public void setValue_3(int v) {
-            value_3.set(v);
+        public void setValue_3(T v) {
+            value_3 = v;
         }
 
-        public int getValue_4() {
-            return value_4.get();
+        public T getValue_4() {
+            return value_4;
         }
 
-        public void setValue_4(int v) {
-            value_4.set(v);
+        public void setValue_4(T v) {
+            value_4 = v;
         }
 
     };
@@ -109,9 +121,17 @@ public class JavaFXDynTable extends Application {
     ObservableList<Record> data = FXCollections.observableArrayList();
 
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("java-buddy.blogspot.com");
+    public void initialize(URL location, ResourceBundle resources) {
+
         tableView.setEditable(true);
+        tableName.focusedProperty().addListener((observable,  oldValue,  newValue) -> {
+            if(newValue && firstTime.get()){
+                tableVbox.requestFocus(); // Delegate the focus to container
+                firstTime.setValue(false); // Variable value changed for future references
+            }
+        });
+        tableName.setPromptText("Table Name");
+
         Callback<TableColumn, TableCell> cellFactory =
                 new Callback<TableColumn, TableCell>() {
 
@@ -122,13 +142,8 @@ public class JavaFXDynTable extends Application {
                 };
 
         btnNew.setOnAction(btnNewHandler);
+        btnReady.setOnAction(btnReadyHandler);
 
-        //init table
-        //Un-editable column of "id"
-        TableColumn col_id = new TableColumn("ID");
-        tableView.getColumns().add(col_id);
-        col_id.setCellValueFactory(
-                new PropertyValueFactory<Record, String>("id"));
 
         //Editable columns
         for(int i=0; i<Day.length; i++){
@@ -136,22 +151,21 @@ public class JavaFXDynTable extends Application {
             col.setCellValueFactory(
                     new PropertyValueFactory<Record, String>(
                             "value_" + String.valueOf(i)));
+            col.impl_setReorderable(false);
+            col.setPrefWidth(100);
+            col.setResizable(false);
             tableView.getColumns().add(col);
             col.setCellFactory(cellFactory);
         }
         tableView.setItems(data);
 
-        Group root = new Group();
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.getChildren().addAll(btnNew, tableView);
-        root.getChildren().add(vBox);
-        primaryStage.setScene(new Scene(root, 500, 400));
-        primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+        tableVbox.setSpacing(10);
+        Insets insets = new Insets(10,20,10,20);
+        tableVbox.setMargin(tableView,insets);
+        tableVbox.setMargin(tableName,insets);
+        tableVbox.setMargin(btnNew,insets);
+        tableVbox.setMargin(btnReady,insets);
+        tableVbox.getChildren().addAll(tableName,btnNew, tableView,btnReady);
     }
 
     EventHandler<ActionEvent> btnNewHandler =
@@ -161,20 +175,30 @@ public class JavaFXDynTable extends Application {
                 public void handle(ActionEvent t) {
 
                     //generate new Record with random number
-                    int newId = data.size();
                     Record newRec = new Record(
-                            newId,
-                            random.nextInt(100),
-                            random.nextInt(100),
-                            random.nextInt(100),
-                            random.nextInt(100),
-                            random.nextInt(100));
+                            "------------",
+                            "------------",
+                            "------------",
+                            "------------",
+                            "------------",
+                            "------------");
                     data.add(newRec);
 
                 }
             };
 
-    class EditingCell extends TableCell<XYChart.Data, Number> {
+    EventHandler<ActionEvent> btnReadyHandler =
+            new EventHandler<ActionEvent>(){
+
+                @Override
+                public void handle(ActionEvent t) {
+                    /**
+                     * La tabla esta lista.
+                     */
+                }
+            };
+
+    class EditingCell<T> extends TableCell<XYChart.Data, T> {
 
         private TextField textField;
 
@@ -203,7 +227,7 @@ public class JavaFXDynTable extends Application {
         }
 
         @Override
-        public void updateItem(Number item, boolean empty) {
+        public void updateItem(T item, boolean empty) {
             super.updateItem(item, empty);
 
             if (empty) {
@@ -231,7 +255,7 @@ public class JavaFXDynTable extends Application {
                 @Override
                 public void handle(KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
-                        commitEdit(Integer.parseInt(textField.getText()));
+                        commitEdit((T)textField.getText());
                     } else if (t.getCode() == KeyCode.ESCAPE) {
                         cancelEdit();
                     }
