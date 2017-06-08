@@ -35,6 +35,7 @@ public class Main extends Application {
         Scene scene = new Scene(mainLayout);
         primaryStage.setScene(scene);
         primaryStage.show();
+        
     }
 
     public void showLogInPane() throws IOException {
