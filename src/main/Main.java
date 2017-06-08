@@ -35,7 +35,7 @@ public class Main extends Application {
 
     public void showMainPane() throws IOException {
         mainLayout = FXMLLoader.load(getClass().getResource("/main/MainPane.fxml"));
-        Scene scene = new Scene(mainLayout,1080,720);
+        Scene scene = new Scene(mainLayout);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -45,11 +45,13 @@ public class Main extends Application {
     public void showLogInPane() throws IOException {
         Pane logInPane = FXMLLoader.load(getClass().getResource("/LogIn/login_panel.fxml"));
         mainLayout.setCenter(logInPane);
+        primaryStage.setResizable(false);
     }
 
     public static void showMenu() throws IOException {
         BorderPane logInPane = FXMLLoader.load(Main.class.getResource("../UI/editor/editor.fxml"));
         mainLayout.setCenter(logInPane);
+        primaryStage.setResizable(true);
     }
 
     public static void createTableStage() throws IOException {
