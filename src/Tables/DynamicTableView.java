@@ -1,27 +1,28 @@
 package Tables;
 
-import javafx.application.Application;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.*;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-
+import java.net.URL;
 import java.util.*;
 
 /**
  * Created by mauri on 6/8/2017.
  */
 
-public class DynamicTableView extends Application {
+public class DynamicTableView implements Initializable {
+
 
     private static final int Num_Colum = 4;
-    private static final int Num_Fila = 3;
+    private static final int Num_Fila = Metada_Parser.rows;
+    @FXML  TableView<ObservableList<String>> tableView = new TableView<>();
 
-    public void start(Stage stage) throws Exception {
+    public void initialize(URL location, ResourceBundle resources) {
 
+        Metada_Parser.parse();
         TestDataGenerator dataGenerator = new TestDataGenerator();
-        TableView<ObservableList<String>> tableView = new TableView<>();
 
         // Rows and Columns Dynamic
 
@@ -48,19 +49,11 @@ public class DynamicTableView extends Application {
             );
         }
 
-        tableView.setPrefHeight(200);
-
-        Scene scene = new Scene(tableView);
-        stage.setScene(scene);
-        stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     private static class TestDataGenerator {
-        private static final String[] DATA = "Mauricio. String. Varchar15. NOSEQUE. Andres. String2. Varchar125. NOSE2QUE. AndrWEQes. StEQWring. VarrcQWEhar52. TIENEELPENEGRANDE.".split(" ");
+        private static final String[] DATA = Metada_Parser.Table_Data.split(",");
 
         private int curWord = 0;
 

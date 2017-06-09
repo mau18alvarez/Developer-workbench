@@ -1,5 +1,6 @@
 package main;
 
+import Tables.Metada_Parser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -9,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.text.TableView;
 import java.io.IOException;
 
 
@@ -28,6 +30,7 @@ public class Main extends Application {
 
         showMainPane();
         showLogInPane();
+        Metada_Parser.parse();
 
 
     }
@@ -62,6 +65,18 @@ public class Main extends Application {
         Scene scene = new Scene(groupTable,430,600);
         tableStage.setScene(scene);
         tableStage.setResizable(false);
+        tableStage.showAndWait();
+    }
+
+    public static void createMetadata() throws IOException {
+        BorderPane metadata = FXMLLoader.load(Main.class.getResource("../Tables/dynamic_table.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Metadata");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(metadata,300,200);
+        tableStage.setScene(scene);
+        tableStage.setResizable(true);
         tableStage.showAndWait();
     }
 
