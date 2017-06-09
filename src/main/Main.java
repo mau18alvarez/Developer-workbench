@@ -6,7 +6,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -55,7 +54,7 @@ public class Main extends Application {
     }
 
     public static void createTableStage() throws IOException {
-        Group groupTable = FXMLLoader.load(Main.class.getResource("../sample/table.fxml"));
+        Group groupTable = FXMLLoader.load(Main.class.getResource("../Tables/table.fxml"));
         Stage tableStage = new Stage();
         tableStage.setTitle("Create New Table");
         tableStage.initModality(Modality.NONE);

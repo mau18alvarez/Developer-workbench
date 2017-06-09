@@ -1,5 +1,6 @@
 package UI.editor;
 
+import Tables.DynamicTableView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -46,6 +47,7 @@ public class Editor implements Initializable {
         TreeItem<String> insert = new TreeItem<>("Insert", new Rectangle(4,4));
         TreeItem<String> delete = new TreeItem<>("Delete", new Rectangle(4,4));
         TreeItem<String> update = new TreeItem<>("Update", new Rectangle(4,4));
+        TreeItem<String> metadata = new TreeItem<>("Metadata", new Rectangle(4,4));
 
         TreeItem<String> table = new TreeItem<>("Table", icon);
         TreeItem<String> index = new TreeItem<>("Index", icon2);
@@ -56,6 +58,7 @@ public class Editor implements Initializable {
 
         leftmenu.setRoot(root);
         leftmenu.setShowRoot(false);
+
         leftmenu.getSelectionModel().selectedItemProperty()
                 .addListener((v,oldValue,newValue) -> {
                     switch (newValue.getValue()){
@@ -67,7 +70,10 @@ public class Editor implements Initializable {
                             }
                             break;
                         }
-                    }
+                        case "Metadata":{
+
+                            }
+                        }
                 });
 
     }
