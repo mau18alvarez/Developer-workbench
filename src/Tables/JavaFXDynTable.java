@@ -25,6 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 
@@ -143,7 +144,6 @@ public class JavaFXDynTable implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         tableView.setEditable(true);
         tableName.focusedProperty().addListener((observable,  oldValue,  newValue) -> {
             if(newValue && firstTime.get()){
@@ -209,14 +209,23 @@ public class JavaFXDynTable implements Initializable {
                 public void handle(ActionEvent t) {
                     String str = "CREATE TABLE "+tableName.getText()+" (";
                     for(Record record : data){
-                        str += record.getValue_0();
-                        str += record.getValue_1();
-                        str += record.getValue_2();
-                        str += record.getValue_3();
-                        str += record.getValue_4();
-                        str += ");";
+                        if(record.getValue_0() != "-" && record.getValue_0() != "")
+                            str += record.getValue_0()+" ";
+                        if(record.getValue_1() != "-" && record.getValue_1() != "")
+                            str += record.getValue_1()+" ";
+                        if(record.getValue_2() != "-" && record.getValue_2() != "")
+                            str += record.getValue_2()+" ";
+                        if(record.getValue_3() != "-" && record.getValue_3() != "")
+                            str += record.getValue_3()+" ";
+                        if(record.getValue_4() != "-" && record.getValue_4() != "")
+                            str += record.getValue_4()+" ";
+                        str = str.substring(0, str.length()-1);
+                        str += ";";
                     }
+                    str += ");";
                     SocketConnection.getInstance().sendMessage(str);
+                    Stage stage = (Stage) tableView.getScene().getWindow();
+                    stage.close();
                 }
             };
 
