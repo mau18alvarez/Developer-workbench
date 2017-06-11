@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import Networking.Socket.SocketConnection;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -36,9 +37,6 @@ public class JavaFXDynTable implements Initializable {
     final BooleanProperty firstTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
 
     @FXML VBox tableVbox;
-
-    static Random random = new Random();
-
     static final String Day[] = {
             "Name",
             "Data Type",
@@ -60,6 +58,35 @@ public class JavaFXDynTable implements Initializable {
             this.value_2 = v2;
             this.value_3 = v3;
             this.value_4 = v4;
+        }
+
+        public void set(int i, T val){
+            switch (i){
+                case 0:{
+                    setValue_0(val);
+                    break;
+                }
+                case 1:{
+                    setValue_1(val);
+                    break;
+                }
+                case 2:{
+                    setValue_2(val);
+                    break;
+                }
+                case 3:{
+                    setValue_3(val);
+                    break;
+                }
+                case 4:{
+                    setValue_4(val);
+                    break;
+                }
+                default:{
+                    break;
+                }
+
+            }
         }
 
         public T getId() {
@@ -112,7 +139,7 @@ public class JavaFXDynTable implements Initializable {
 
     };
 
-    ObservableList<Record> data = FXCollections.observableArrayList();
+    ObservableList<Record<String>> data = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -169,13 +196,7 @@ public class JavaFXDynTable implements Initializable {
                 public void handle(ActionEvent t) {
 
                     //generate new Record with random number
-                    Record newRec = new Record(
-                            "------------",
-                            "------------",
-                            "------------",
-                            "------------",
-                            "------------",
-                            "------------");
+                    Record<String> newRec = new Record("-", "-", "-", "-", "-", "-");
                     data.add(newRec);
 
                 }
@@ -186,9 +207,16 @@ public class JavaFXDynTable implements Initializable {
 
                 @Override
                 public void handle(ActionEvent t) {
-                    /**
-                     * La tabla esta lista.
-                     */
+                    String str = "CREATE TABLE "+tableName.getText()+" (";
+                    for(Record record : data){
+                        str += record.getValue_0();
+                        str += record.getValue_1();
+                        str += record.getValue_2();
+                        str += record.getValue_3();
+                        str += record.getValue_4();
+                        str += ");";
+                    }
+                    SocketConnection.getInstance().sendMessage(str);
                 }
             };
 
@@ -202,11 +230,9 @@ public class JavaFXDynTable implements Initializable {
         public void startEdit() {
 
             super.startEdit();
-
             if (textField == null) {
                 createTextField();
             }
-
             setGraphic(textField);
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             textField.selectAll();
@@ -215,20 +241,26 @@ public class JavaFXDynTable implements Initializable {
         @Override
         public void cancelEdit() {
             super.cancelEdit();
-
-            setText(String.valueOf(getItem()));
+            if (textField.getText() == "") {
+                setText(String.valueOf(getItem()));
+                data.get(getIndex()).set(getTableView().getColumns().indexOf(getTableColumn()),(String)getItem());
+            }else{
+                setText(textField.getText());
+                data.get(getIndex()).set(getTableView().getColumns().indexOf(getTableColumn()),textField.getText());
+            }
             setContentDisplay(ContentDisplay.TEXT_ONLY);
         }
 
         @Override
         public void updateItem(T item, boolean empty) {
             super.updateItem(item, empty);
-
-            if (empty) {
+            if (item == null) {
                 setText(null);
                 setGraphic(null);
             } else {
+                System.out.println("String:" +getString());
                 if (isEditing()) {
+                    System.out.println("Editing");
                     if (textField != null) {
                         textField.setText(getString());
                     }
@@ -245,11 +277,11 @@ public class JavaFXDynTable implements Initializable {
             textField = new TextField(getString());
             textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()*2);
             textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
                 @Override
                 public void handle(KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
                         commitEdit((T)textField.getText());
+                        data.get(getIndex()).set(getTableView().getColumns().indexOf(getTableColumn()),textField.getText());
                     } else if (t.getCode() == KeyCode.ESCAPE) {
                         cancelEdit();
                     }

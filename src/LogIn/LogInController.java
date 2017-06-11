@@ -1,6 +1,7 @@
 package LogIn;
 
 
+import Networking.Socket.SocketConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import main.Main;
@@ -19,6 +20,8 @@ public class LogInController {
 
         Main.ip = login_ip.getText();
         Main.puerto = login_port.getText();
+
+        //SocketConnection.getInstance().initialize(login_ip.getText(),Integer.valueOf(login_port.getText()));
 
         Main.showMenu();
 
