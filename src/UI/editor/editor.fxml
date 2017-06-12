@@ -56,9 +56,40 @@
                </content>
             </Tab>
             <Tab closable="false" text="Tables">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+               <content>
+                  <BorderPane>
+                     <center>
+                        <VBox prefHeight="160.0" prefWidth="720.0">
+                           <children>
+                              <ScrollPane pannable="true" prefHeight="430.0" prefViewportHeight="400.0" prefViewportWidth="400.0" prefWidth="1189.0" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <Pane fx:id="aDrawPane1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8000.0" prefWidth="8000.0" />
+                                 </content>
+                              </ScrollPane>
+                              <VBox alignment="CENTER" fillWidth="false" prefHeight="21.0" prefWidth="213.0" VBox.vgrow="NEVER">
+                                 <padding>
+                                    <Insets top="8.0" />
+                                 </padding>
+                                 <children>
+                                    <Slider fx:id="zoomSlider1" max="200" min="10" value="100" />
+                                    <Label prefHeight="8.0" prefWidth="40.0" text="Zoom" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </center>
+                     <bottom>
+                        <VBox prefHeight="164.0" prefWidth="1264.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TextArea prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                     </bottom>
+                     <left>
+                        <TreeView id="leftmenu" fx:id="leftmenu1" prefHeight="495.0" prefWidth="252.0" BorderPane.alignment="CENTER" />
+                     </left>
+                  </BorderPane>
+               </content>
             </Tab>
             <Tab closable="false" text="Components">
               <content>

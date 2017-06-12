@@ -74,9 +74,10 @@ public class Main extends Application {
         tableStage.setTitle("Metadata");
         tableStage.initModality(Modality.NONE);
         tableStage.initOwner(primaryStage);
-        Scene scene = new Scene(metadata,300,200);
+        Scene scene = new Scene(metadata);
         tableStage.setScene(scene);
         tableStage.setResizable(true);
+
         tableStage.showAndWait();
 
     }

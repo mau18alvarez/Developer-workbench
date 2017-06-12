@@ -18,10 +18,8 @@ public class LogInController {
 
     public void onclickevent () throws IOException{
 
-        Main.ip = login_ip.getText();
-        Main.puerto = login_port.getText();
 
-        SocketConnection.getInstance().initialize(login_ip.getText(),Integer.valueOf(login_port.getText()));
+        //SocketConnection.getInstance().initialize(login_ip.getText(),Integer.valueOf(login_port.getText()));
 
         Main.showMenu();
 

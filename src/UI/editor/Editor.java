@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
 public class Editor implements Initializable {
 
     @FXML TreeView<String> leftmenu;
+    @FXML TreeView<String> leftmenu1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,8 +40,9 @@ public class Editor implements Initializable {
         Circle icon2 = new Circle(3);
         icon.setFill(Color.BLACK);
 
+        //Para los de Structure
 
-        TreeItem<String> root = new TreeItem<>("Root",icon);
+        TreeItem<String> root_structure = new TreeItem<>("Root",icon);
         TreeItem<String> create = new TreeItem<>("Create", new Rectangle(4,4));
         TreeItem<String> drop = new TreeItem<>("Drop", new Rectangle(4,4));
         TreeItem<String> select = new TreeItem<>("Select", new Rectangle(4,4));
@@ -52,11 +54,11 @@ public class Editor implements Initializable {
         TreeItem<String> table = new TreeItem<>("Table", icon);
         TreeItem<String> index = new TreeItem<>("Index", icon2);
 
-        root.getChildren().addAll(create,drop,select,insert,delete,update);
+        root_structure.getChildren().addAll(create,drop,select,insert,delete,update);
 
         create.getChildren().addAll(table,index);
 
-        leftmenu.setRoot(root);
+        leftmenu.setRoot(root_structure);
         leftmenu.setShowRoot(false);
 
         leftmenu.getSelectionModel().selectedItemProperty()
@@ -80,6 +82,16 @@ public class Editor implements Initializable {
                             }
                         }
                 });
+
+        //Para los de Structure
+        TreeItem<String> root_table = new TreeItem<>("Root",icon);
+        TreeItem<String> Metadata = new TreeItem<>("Metadata", new Rectangle(4,4));
+
+
+        root_table.getChildren().addAll(Metadata);
+
+        leftmenu1.setRoot(root_table);
+        leftmenu1.setShowRoot(false);
 
     }
 
