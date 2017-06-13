@@ -53,6 +53,8 @@ public class Main extends Application {
     public static void showMenu() throws IOException {
         BorderPane logInPane = FXMLLoader.load(Main.class.getResource("../UI/editor/editor.fxml"));
         mainLayout.setCenter(logInPane);
+        primaryStage.setHeight(720);
+        primaryStage.setWidth(1080);
         primaryStage.setResizable(true);
     }
 

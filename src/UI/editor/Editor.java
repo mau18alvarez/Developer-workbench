@@ -1,26 +1,26 @@
 package UI.editor;
 
-import Tables.DynamicTableView;
-import javafx.event.ActionEvent;
+import UI.custom.DBTable;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.TreeCell;
+import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import main.Main;
-import sun.reflect.generics.tree.Tree;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -32,6 +32,10 @@ public class Editor implements Initializable {
     TreeView<String> leftmenu;
     @FXML
     TreeView<String> menu_tables;
+    @FXML
+    Pane StructPane;
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,6 +45,11 @@ public class Editor implements Initializable {
 
         Circle icon2 = new Circle(3);
         icon.setFill(Color.BLACK);
+
+
+        DBTable dbTable = new DBTable("mierda");
+        dbTable.addTableAttribute("Mierda Aguada");
+        StructPane.getChildren().add(dbTable);
 
         //Para los de Structure
 
