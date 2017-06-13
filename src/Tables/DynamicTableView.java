@@ -13,8 +13,7 @@ import java.util.*;
  */
 
 public class DynamicTableView implements Initializable {
-
-
+    
     private static final int Num_Colum = 4;
     private static final int Num_Fila = Metada_Parser.rows-1;
     @FXML  TableView<ObservableList<String>> tableView = new TableView<>();
