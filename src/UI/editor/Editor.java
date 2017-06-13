@@ -28,8 +28,10 @@ import java.util.ResourceBundle;
  */
 public class Editor implements Initializable {
 
-    @FXML TreeView<String> leftmenu;
-    @FXML TreeView<String> leftmenu1;
+    @FXML
+    TreeView<String> leftmenu;
+    @FXML
+    TreeView<String> menu_tables;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,28 +44,28 @@ public class Editor implements Initializable {
 
         //Para los de Structure
 
-        TreeItem<String> root_structure = new TreeItem<>("Root",icon);
-        TreeItem<String> create = new TreeItem<>("Create", new Rectangle(4,4));
-        TreeItem<String> drop = new TreeItem<>("Drop", new Rectangle(4,4));
-        TreeItem<String> select = new TreeItem<>("Select", new Rectangle(4,4));
-        TreeItem<String> insert = new TreeItem<>("Insert", new Rectangle(4,4));
-        TreeItem<String> delete = new TreeItem<>("Delete", new Rectangle(4,4));
-        TreeItem<String> update = new TreeItem<>("Update", new Rectangle(4,4));
+        TreeItem<String> root_structure = new TreeItem<>("Root", icon);
+        TreeItem<String> create = new TreeItem<>("Create", new Rectangle(4, 4));
+        TreeItem<String> drop = new TreeItem<>("Drop", new Rectangle(4, 4));
+        TreeItem<String> select = new TreeItem<>("Select", new Rectangle(4, 4));
+        TreeItem<String> insert = new TreeItem<>("Insert", new Rectangle(4, 4));
+        TreeItem<String> delete = new TreeItem<>("Delete", new Rectangle(4, 4));
+        TreeItem<String> update = new TreeItem<>("Update", new Rectangle(4, 4));
 
 
         TreeItem<String> table = new TreeItem<>("Table", icon);
         TreeItem<String> index = new TreeItem<>("Index", icon2);
 
-        root_structure.getChildren().addAll(create,drop,select,insert,delete,update);
+        root_structure.getChildren().addAll(create, drop, select, insert, delete, update);
 
-        create.getChildren().addAll(table,index);
+        create.getChildren().addAll(table, index);
 
         leftmenu.setRoot(root_structure);
         leftmenu.setShowRoot(false);
 
         leftmenu.getSelectionModel().selectedItemProperty()
-                .addListener((v,oldValue,newValue) -> {
-                    switch (newValue.getValue()){
+                .addListener((v, oldValue, newValue) -> {
+                    switch (newValue.getValue()) {
                         case "Table": {
                             try {
                                 Main.createTableStage();
@@ -72,27 +74,33 @@ public class Editor implements Initializable {
                             }
                             break;
                         }
-                        case "Update":{
-                            try {
-                                Main.createMetadata();
-                            } catch (IOException e){
-                                e.printStackTrace();
-                            }
-
-                            }
-                        }
+                    }
                 });
 
         //Para los de Structure
-        TreeItem<String> root_table = new TreeItem<>("Root",icon);
-        TreeItem<String> Metadata = new TreeItem<>("Metadata", new Rectangle(4,4));
+        TreeItem<String> root_table = new TreeItem<>("Root", icon);
+        TreeItem<String> Metadata = new TreeItem<>("Metadata", new Rectangle(4, 4));
 
 
         root_table.getChildren().addAll(Metadata);
 
-        leftmenu1.setRoot(root_table);
-        leftmenu1.setShowRoot(false);
+        menu_tables.setRoot(root_table);
+        menu_tables.setShowRoot(false);
+
+        menu_tables.getSelectionModel().selectedItemProperty()
+                .addListener((v, oldValue, newValue) -> {
+                    switch (newValue.getValue()) {
+                        case "Metadata": {
+                            try {
+                                Main.createMetadata();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                    }
+                });
+
 
     }
-
 }
