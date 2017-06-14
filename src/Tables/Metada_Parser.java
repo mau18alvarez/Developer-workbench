@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Metada_Parser {
 
-    public static String Data = "MIERDA,Fname1-!VARCHAR(15),Pene2-VARCHAR(20):REFERENCE(CURSO.ID),Panochito3-!VARCHAR(10),Panochito4-!VARCHAR(25),Panochito5-!VARCHAR(10),Panochito6-!VARCHAR(10),Pene7-VARCHAR(2dsf0):REFERENCE(CUfeqweqweqweqwqwsRSO.ID)";
+    public static String Data = "MIERDATitulo,Fname1-!VARCHAR(15),Pene2-VARCHAR(20):REFERENCE(CURSO.ID),Panochito3-!VARCHAR(10),Panochito4-!VARCHAR(25),Panochito5-!VARCHAR(10),Panochito6-!VARCHAR(10),Pene7-VARCHAR(2dsf0):REFERENCE(CUfeqweqweqweqwqwsRSO.ID)";
     public static String Table_Name = "";
     public static String Table_Data = "";
     public static int rows= 0;
