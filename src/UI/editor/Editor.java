@@ -1,15 +1,12 @@
 package UI.editor;
 
 import UI.custom.DBTable;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,9 +15,6 @@ import main.Main;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -72,19 +66,22 @@ public class Editor implements Initializable {
         leftmenu.setRoot(root_structure);
         leftmenu.setShowRoot(false);
 
-        leftmenu.getSelectionModel().selectedItemProperty()
-                .addListener((v, oldValue, newValue) -> {
-                    switch (newValue.getValue()) {
-                        case "Table": {
-                            try {
-                                Main.createTableStage();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            break;
+        leftmenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
+                    case "Table": {
+                        try {
+                            Main.createTableStage();
+                            leftmenu.getSelectionModel().clearSelection();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+                        break;
                     }
-                });
+                }
+            }
+        });
 
         //Para los de Structure
         TreeItem<String> root_table = new TreeItem<>("Root", icon);
@@ -109,7 +106,10 @@ public class Editor implements Initializable {
                         }
                     }
                 });
+    }
 
+    @FXML
+    public void onTreeClick(){
 
     }
 }
