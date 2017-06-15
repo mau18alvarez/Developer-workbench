@@ -27,13 +27,12 @@
                         <VBox prefHeight="160.0" prefWidth="720.0">
                            <children>
                                 <ScrollPane pannable="true" prefHeight="430.0" prefViewportHeight="400.0" prefViewportWidth="400.0" prefWidth="1189.0" VBox.vgrow="ALWAYS">
-                                    <content>
-                                        <Pane fx:id="StructPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8000.0" prefWidth="8000.0">
-                </Pane>
-                                    </content>
+                                 <content>
+                                    <Pane fx:id="StructPane" prefHeight="456.0" prefWidth="1010.0" />
+                                 </content>
                                 </ScrollPane>
                                 <VBox alignment="CENTER" fillWidth="false" prefHeight="21.0" prefWidth="213.0" VBox.vgrow="NEVER">
-                                    <Slider fx:id="zoomSlider" max="200" min="10" value="100" />
+                                    <Slider fx:id="zoomSlider" blockIncrement="1.0" min="1.0" value="1.0" />
                                     <Label prefHeight="8.0" prefWidth="40.0" text="Zoom" />
                                     <padding>
                                         <Insets top="8.0" />

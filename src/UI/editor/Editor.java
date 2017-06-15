@@ -1,15 +1,22 @@
 package UI.editor;
 
+import UI.custom.CustomStructurePane;
 import UI.custom.DBTable;
+import UI.custom.ZoomablePane;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -34,6 +41,8 @@ public class Editor implements Initializable {
     TreeView<String> menu_tables;
     @FXML
     Pane StructPane;
+    @FXML
+    Slider zoomSlider;
 
 
 
@@ -47,9 +56,16 @@ public class Editor implements Initializable {
         icon.setFill(Color.BLACK);
 
 
-        DBTable dbTable = new DBTable("mierda");
-        dbTable.addTableAttribute("Mierda Aguada");
-        StructPane.getChildren().add(dbTable);
+        CustomStructurePane structurePane = new CustomStructurePane();
+        structurePane.addTable("MIERDA,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");
+        structurePane.addTable("Mierdota,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");
+        structurePane.addTable("FUCK,Fname-!VARCHAR(15),Pene-VARCHAR(20):MIERDA.ID,Panochito-!VARCHAR(10)");
+
+        //structurePane.connect();
+        ZoomablePane zoomablePane = new ZoomablePane(structurePane);
+        StructPane.getChildren().addAll(zoomablePane);
+
+        zoomablePane.zoomFactorProperty().bind(zoomSlider.valueProperty());
 
         //Para los de Structure
 
