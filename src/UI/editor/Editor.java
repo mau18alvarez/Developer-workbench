@@ -69,15 +69,17 @@ public class Editor implements Initializable {
         leftmenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
-                    case "Table": {
-                        try {
-                            Main.createTableStage();
-                            leftmenu.getSelectionModel().clearSelection();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                if (leftmenu.getSelectionModel().getSelectedItem() != null) {
+                    switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
+                        case "Table": {
+                            try {
+                                leftmenu.getSelectionModel().clearSelection();
+                                Main.createTableStage();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
