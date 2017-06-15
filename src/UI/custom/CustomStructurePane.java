@@ -35,7 +35,6 @@ public class CustomStructurePane extends Pane {
     }
 
     public void addTable(DBTable table){
-        //this.add(table,columnNumber,rowNumber,1,1);
         this.getChildren().add(table);
         for(Node node : this.getChildren()){
             if(table != node) {
@@ -124,32 +123,4 @@ public class CustomStructurePane extends Pane {
 
     }
 
-}
-
-class BoundLine extends Line {
-    BoundLine(double startX, double startY, double endX, double endY) {
-        startXProperty().bind(new SimpleDoubleProperty(startX));
-        startYProperty().bind(new SimpleDoubleProperty(startY));
-        endXProperty().bind(new SimpleDoubleProperty(endX));
-        endYProperty().bind(new SimpleDoubleProperty(endY));
-        setStrokeWidth(2);
-        setStroke(Color.GREEN.deriveColor(0, 1, 1, 0.5));
-        setStrokeLineCap(StrokeLineCap.BUTT);
-        getStrokeDashArray().setAll(10.0, 5.0);
-        setMouseTransparent(true);
-    }
-}
-
-// a draggable anchor displayed around a point.
-class Anchor extends Circle {
-    Anchor(Color color, DoubleProperty x, DoubleProperty y) {
-        super(x.get(), y.get(), 10);
-        setFill(color.deriveColor(1, 1, 1, 0.5));
-        setStroke(color);
-        setStrokeWidth(2);
-        setStrokeType(StrokeType.OUTSIDE);
-
-        x.bind(centerXProperty());
-        y.bind(centerYProperty());
-    }
 }

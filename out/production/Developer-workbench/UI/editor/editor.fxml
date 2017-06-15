@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="aBorderPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.editor.Editor">
     <padding>
@@ -92,9 +94,27 @@
                </content>
             </Tab>
             <Tab closable="false" text="Components">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0">
+                          <items>
+                              <Label text="Show Components:">
+                                 <font>
+                                    <Font name="Goudy Old Style" size="21.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="componentsDropDown" prefWidth="150.0" promptText="none" />
+                          </items>
+                        </ToolBar>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <content>
+                              <Pane fx:id="nodesPane" prefHeight="679.0" prefWidth="1302.0" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </content>
             </Tab>
          </tabs>
       </TabPane>

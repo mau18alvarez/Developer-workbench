@@ -1,10 +1,14 @@
 package UI.editor;
 
 import UI.custom.CustomStructurePane;
+import UI.custom.NodesPane;
 import UI.custom.ZoomablePane;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -32,6 +36,10 @@ public class Editor implements Initializable {
     Pane StructPane;
     @FXML
     Slider zoomSlider;
+    @FXML
+    Pane nodesPane;
+    @FXML
+    ComboBox componentsDropDown;
 
 
     @Override
@@ -57,6 +65,28 @@ public class Editor implements Initializable {
         StructPane.getChildren().addAll(zoomablePane);
 
         zoomablePane.zoomFactorProperty().bind(zoomSlider.valueProperty());
+
+        NodesPane nPane = new NodesPane();
+        nPane.setScaleX(0.5);
+        nPane.setScaleY(0.5);
+        ObservableList<String> dropDownItems = FXCollections.observableArrayList();
+        dropDownItems.addAll("Disk Nodes", "Network");
+        componentsDropDown.setItems(dropDownItems);
+        componentsDropDown.valueProperty().addListener((obs, oldItem, newItem) -> {
+            switch (newItem.toString()) {
+                case "Disk Nodes": {
+                    nPane.addNodes("Disknode1°fff°mmm°mm|Disknode2°fff°mmm°mm|Disknode3°fff°mmm°mm|asdfsd°asdfsdf");
+                    nodesPane.getChildren().addAll(nPane);
+                    break;
+                }
+                case "Network": {
+                    nPane.getChildren().clear();
+                    nodesPane.getChildren().remove(nPane);
+                    System.out.println("mierdaConCaca");
+                    break;
+                }
+            }
+        });
 
         //Para los de Structure
 
@@ -84,7 +114,7 @@ public class Editor implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if (leftmenu.getSelectionModel().getSelectedItem() != null) {
-                    if (event.getClickCount() == 2){
+                    if (event.getClickCount() == 2) {
                         switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
                             case "Table": {
                                 try {
@@ -95,37 +125,20 @@ public class Editor implements Initializable {
                                 }
                                 break;
                             }
+                            case "Insert": {
+                                leftmenu.getSelectionModel().clearSelection();
+                                try {
+                                    Main.showInsertUI();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
                         }
                     }
                 }
             }
         });
-
-
-
-        //Para los de Structure
-        TreeItem<String> root_table = new TreeItem<>("Root", icon);
-        TreeItem<String> Metadata = new TreeItem<>("Metadata", new Rectangle(4, 4));
-
-
-        root_table.getChildren().addAll(Metadata);
-
-        menu_tables.setRoot(root_table);
-        menu_tables.setShowRoot(false);
-
-        menu_tables.getSelectionModel().selectedItemProperty()
-                .addListener((v, oldValue, newValue) -> {
-                    switch (newValue.getValue()) {
-                        case "Metadata": {
-                            try {
-                                Main.createMetadata();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                        }
-                    }
-                });
     }
 
     @FXML

@@ -84,6 +84,18 @@ public class Main extends Application {
 
     }
 
+    public static void showInsertUI() throws IOException{
+        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/insert/InsertMenu.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Insert");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(pane,600,500);
+        tableStage.setScene(scene);
+        tableStage.setResizable(false);
+        tableStage.showAndWait();
+    }
+
 
     public static void main(String[] args) {
         launch(args);

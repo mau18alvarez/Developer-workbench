@@ -51,4 +51,8 @@ public class DBTable extends VBox {
         this.data.add(attribute);
     }
 
+    public void setStile(String stile){
+        this.setStile(stile);
+    }
+
 }
