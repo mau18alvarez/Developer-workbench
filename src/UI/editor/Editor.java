@@ -30,7 +30,6 @@ public class Editor implements Initializable {
     Pane StructPane;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -66,24 +65,29 @@ public class Editor implements Initializable {
         leftmenu.setRoot(root_structure);
         leftmenu.setShowRoot(false);
 
+
         leftmenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (leftmenu.getSelectionModel().getSelectedItem() != null) {
-                    switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
-                        case "Table": {
-                            try {
-                                leftmenu.getSelectionModel().clearSelection();
-                                Main.createTableStage();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    if (event.getClickCount() == 2){
+                        switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
+                            case "Table": {
+                                try {
+                                    leftmenu.getSelectionModel().clearSelection();
+                                    Main.createTableStage();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
                 }
             }
         });
+
+
 
         //Para los de Structure
         TreeItem<String> root_table = new TreeItem<>("Root", icon);
