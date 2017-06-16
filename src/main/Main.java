@@ -120,6 +120,18 @@ public class Main extends Application {
         tableStage.showAndWait();
     }
 
+    public static void selectUI() throws IOException{
+        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/Select/SelectMenu.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Select");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(pane);
+        tableStage.setScene(scene);
+        tableStage.setResizable(true);
+        tableStage.showAndWait();
+    }
+
 
     public static void main(String[] args) {
         launch(args);
