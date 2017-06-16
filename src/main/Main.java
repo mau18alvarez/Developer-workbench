@@ -129,6 +129,7 @@ public class Main extends Application {
         Scene scene = new Scene(pane);
         tableStage.setScene(scene);
         tableStage.setResizable(true);
+        tableStage.showAndWait();
     }
 
     public static void showDeleteUI() throws IOException{
