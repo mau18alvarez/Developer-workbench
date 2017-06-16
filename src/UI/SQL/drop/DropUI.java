@@ -19,6 +19,7 @@ public class DropUI implements Initializable {
 
     @FXML Button btnReady;
     @FXML TextField drop_name;
+    @FXML Button cancelBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,5 +35,16 @@ public class DropUI implements Initializable {
 
             }
         });
+
+        EventHandler<ActionEvent> cancelBtnHandler =
+                new EventHandler<ActionEvent>(){
+
+                    @Override
+                    public void handle(ActionEvent t) {
+                        Stage stage = (Stage) btnReady.getScene().getWindow();
+                        stage.close();
+                    }
+                };
+        cancelBtn.setOnAction(cancelBtnHandler);
     }
 }

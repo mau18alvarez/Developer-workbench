@@ -138,7 +138,7 @@ public class Main extends Application {
         tableStage.setTitle("Delete");
         tableStage.initModality(Modality.NONE);
         tableStage.initOwner(primaryStage);
-        Scene scene = new Scene(pane,600,400);
+        Scene scene = new Scene(pane,600,268);
         tableStage.setScene(scene);
         tableStage.setResizable(false);
         tableStage.showAndWait();

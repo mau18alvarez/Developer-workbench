@@ -20,6 +20,7 @@ public class SelectUI implements Initializable {
     @FXML TextField from_txtfield;
     @FXML TextField where_txtfield;
     @FXML Button btnReady;
+    @FXML Button cancelBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,5 +41,16 @@ public class SelectUI implements Initializable {
 
             }
         });
+
+        EventHandler<ActionEvent> cancelBtnHandler =
+                new EventHandler<ActionEvent>(){
+
+                    @Override
+                    public void handle(ActionEvent t) {
+                        Stage stage = (Stage) btnReady.getScene().getWindow();
+                        stage.close();
+                    }
+                };
+        cancelBtn.setOnAction(cancelBtnHandler);
     }
 }

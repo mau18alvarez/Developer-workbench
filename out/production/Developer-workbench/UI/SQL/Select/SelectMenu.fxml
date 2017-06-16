@@ -31,5 +31,6 @@
          </font>
       </Label>
         <Button fx:id="btnReady" layoutX="276.0" layoutY="225.0" mnemonicParsing="false" text="Ready" />
+      <Button fx:id="cancelBtn" layoutX="511.0" layoutY="225.0" mnemonicParsing="false" text="Cancel" />
     </children>
 </Pane>
