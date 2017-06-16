@@ -1,8 +1,12 @@
 package UI.editor;
 
-import UI.custom.DBTable;
+import UI.custom.CustomStructurePane;
+import UI.custom.NodesPane;
 import UI.custom.SQLTable;
+import UI.custom.ZoomablePane;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -25,12 +29,14 @@ public class Editor implements Initializable {
 
     @FXML TreeView<String> leftmenu;
     @FXML Pane StructPane;
+    @FXML Slider zoomSlider;
+    @FXML Pane nodesPane;
+    @FXML ComboBox componentsDropDown;
 
     //Tables tab
     @FXML TableView<List<String>> tvTable;
     @FXML Label lbTableTitle;
     @FXML ListView<SQLTable> lvTables;
-
 
 
     @Override
@@ -42,9 +48,45 @@ public class Editor implements Initializable {
         Circle icon2 = new Circle(3);
         icon.setFill(Color.BLACK);
 
-        DBTable dbTable = new DBTable("mierda");
+        /*DBTable dbTable = new DBTable("mierda");
         dbTable.addTableAttribute("Mierda Aguada");
-        StructPane.getChildren().add(dbTable);
+        StructPane.getChildren().add(dbTable);*/
+
+        CustomStructurePane structurePane = new CustomStructurePane();
+        structurePane.setScaleX(0.5);
+        structurePane.setScaleY(0.5);
+
+        structurePane.addTable("MIERDA,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");
+        structurePane.addTable("Mierdota,Fname-!VARCHAR(15),Pene-VARCHAR(20):FUCK.ID,Panochito-!VARCHAR(10)");
+        structurePane.addTable("FUCK,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");
+
+        //structurePane.connect();
+        ZoomablePane zoomablePane = new ZoomablePane(structurePane);
+        StructPane.getChildren().addAll(zoomablePane);
+
+        zoomablePane.zoomFactorProperty().bind(zoomSlider.valueProperty());
+
+        NodesPane nPane = new NodesPane();
+        nPane.setScaleX(0.5);
+        nPane.setScaleY(0.5);
+        ObservableList<String> dropDownItems = FXCollections.observableArrayList();
+        dropDownItems.addAll("Disk Nodes", "Network");
+        componentsDropDown.setItems(dropDownItems);
+        componentsDropDown.valueProperty().addListener((obs, oldItem, newItem) -> {
+            switch (newItem.toString()) {
+                case "Disk Nodes": {
+                    nPane.addNodes("Disknode1°fff°mmm°mm|Disknode2°fff°mmm°mm|Disknode3°fff°mmm°mm|asdfsd°asdfsdf");
+                    nodesPane.getChildren().addAll(nPane);
+                    break;
+                }
+                case "Network": {
+                    nPane.getChildren().clear();
+                    nodesPane.getChildren().remove(nPane);
+                    System.out.println("mierdaConCaca");
+                    break;
+                }
+            }
+        });
 
         //Para los de Structure
 
@@ -69,15 +111,53 @@ public class Editor implements Initializable {
 
         leftmenu.setOnMouseClicked(event -> {
             if (leftmenu.getSelectionModel().getSelectedItem() != null) {
-                switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
-                    case "Table": {
-                        try {
-                            leftmenu.getSelectionModel().clearSelection();
-                            Main.createTableStage();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                if (event.getClickCount() == 2) {
+                    switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
+                        case "Table": {
+                            try {
+                                leftmenu.getSelectionModel().clearSelection();
+                                Main.createTableStage();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
                         }
-                        break;
+                        case "Insert": {
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.showInsertUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                        case "Drop": {
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.dropUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                        case "Update":{
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.showUpdateUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                        case "Delete":{
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.showDeleteUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
                     }
                 }
             }
@@ -118,8 +198,8 @@ public class Editor implements Initializable {
         for (List<String> values : sqlTable.getValues()) {
             tvTable.getItems().add(values);
         }
-    }
 
+    }
     @FXML
     public void onTreeClick(){
 
