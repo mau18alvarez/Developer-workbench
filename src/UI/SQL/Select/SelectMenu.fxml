@@ -7,30 +7,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="insertPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.SQL.Select.SelectUI">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.SQL.Select.SelectUI">
     <children>
-        <VBox fx:id="insertVBox" alignment="CENTER" layoutX="169.0" layoutY="71.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="139.0" prefWidth="385.0" spacing="10.0">
-         <children>
-            <TextField fx:id="select_txtfield" />
-            <TextField fx:id="from_txtfield" prefHeight="25.0" prefWidth="322.0" />
-            <TextField fx:id="where_txtfield" />
-         </children></VBox>
-      <Label layoutX="83.0" layoutY="97.0" text="Select ID">
+        <VBox fx:id="updateVbox" layoutX="75.0" layoutY="96.0" prefHeight="190.0" prefWidth="275.0" />
+        <Button fx:id="readyBtn" layoutX="315.0" layoutY="380.0" mnemonicParsing="false" text="Ready" />
+        <TextField fx:id="tableName" layoutX="148.0" layoutY="24.0" promptText="Table Name" />
+        <Label layoutX="25.0" layoutY="29.0" prefHeight="21.0" prefWidth="105.0" text="Select Table" textAlignment="CENTER" textOverrun="CLIP">
          <font>
             <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="94.0" layoutY="130.0" text="From">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="89.0" layoutY="166.0" text="Where">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-        <Button fx:id="btnReady" layoutX="276.0" layoutY="225.0" mnemonicParsing="false" text="Ready" />
-      <Button fx:id="cancelBtn" layoutX="511.0" layoutY="225.0" mnemonicParsing="false" text="Cancel" />
+         </font></Label>
+        <Label layoutX="26.0" layoutY="309.0" prefHeight="21.0" prefWidth="71.0" text="WHERE" />
+        <Button fx:id="addBtn" layoutX="26.0" layoutY="55.0" mnemonicParsing="false" text="Add Attribute" />
+        <TextField fx:id="where_id" layoutX="97.0" layoutY="304.0" />
+        <Label layoutX="26.0" layoutY="350.0" text="EQUALS" />
+        <TextField fx:id="equals_id" layoutX="97.0" layoutY="350.0" />
+        <Button fx:id="cancelBtn" layoutX="375.0" layoutY="380.0" mnemonicParsing="false" text="Cancel" />
     </children>
 </Pane>
