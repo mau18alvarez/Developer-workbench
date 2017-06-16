@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="insertPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.SQL.Select.SelectUI">
+    <children>
+        <VBox fx:id="insertVBox" alignment="CENTER" layoutX="169.0" layoutY="71.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="139.0" prefWidth="385.0" spacing="10.0">
+         <children>
+            <TextField fx:id="select_txtfield" />
+            <TextField fx:id="from_txtfield" prefHeight="25.0" prefWidth="322.0" />
+            <TextField fx:id="where_txtfield" />
+         </children></VBox>
+      <Label layoutX="83.0" layoutY="97.0" text="Select ID">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="94.0" layoutY="130.0" text="From">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="89.0" layoutY="166.0" text="Where">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+        <Button fx:id="btnReady" layoutX="276.0" layoutY="225.0" mnemonicParsing="false" text="Ready" />
+    </children>
+</Pane>

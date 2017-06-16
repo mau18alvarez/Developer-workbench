@@ -149,7 +149,7 @@ public class Editor implements Initializable {
                             }
                             break;
                         }
-                        case "Delete":{
+                        case "Delete": {
                             leftmenu.getSelectionModel().clearSelection();
                             try {
                                 Main.showDeleteUI();
@@ -158,6 +158,16 @@ public class Editor implements Initializable {
                             }
                             break;
                         }
+                        case "Select":{
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.selectUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+
                     }
                 }
             }
