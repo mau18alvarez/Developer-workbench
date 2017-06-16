@@ -18,7 +18,7 @@ public class LogInController {
 
     public void onclickevent () throws IOException{
 
-        SocketConnection.getInstance().initialize(login_ip.getText(),Integer.valueOf(login_port.getText()));
+        //SocketConnection.getInstance().initialize(login_ip.getText(),Integer.valueOf(login_port.getText()));
 
         Main.showMenu();
 
