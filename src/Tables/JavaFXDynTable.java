@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -36,6 +37,8 @@ public class JavaFXDynTable implements Initializable {
     private Button btnReady = new Button("Ready");
     private TextField tableName = new TextField();
     final BooleanProperty firstTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
+
+    private Button cancelBtn;
 
     @FXML VBox tableVbox;
     static final String Day[] = {
@@ -145,8 +148,8 @@ public class JavaFXDynTable implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableView.setEditable(true);
-        tableName.focusedProperty().addListener((observable,  oldValue,  newValue) -> {
-            if(newValue && firstTime.get()){
+        tableName.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && firstTime.get()) {
                 tableVbox.requestFocus(); // Delegate the focus to container
                 firstTime.setValue(false); // Variable value changed for future references
             }
@@ -167,7 +170,7 @@ public class JavaFXDynTable implements Initializable {
 
 
         //Editable columns
-        for(int i=0; i<Day.length; i++){
+        for (int i = 0; i < Day.length; i++) {
             TableColumn col = new TableColumn(Day[i]);
             col.setCellValueFactory(
                     new PropertyValueFactory<Record, String>(
@@ -180,13 +183,29 @@ public class JavaFXDynTable implements Initializable {
         }
         tableView.setItems(data);
 
+        cancelBtn = new Button("Cancel");
+        EventHandler<ActionEvent> cancelBtnHandler =
+                new EventHandler<ActionEvent>(){
+
+                    @Override
+                    public void handle(ActionEvent t) {
+                        Stage stage = (Stage) tableVbox.getScene().getWindow();
+                        stage.close();
+                    }
+                };
+        cancelBtn.setOnAction(cancelBtnHandler);
+
         tableVbox.setSpacing(10);
         Insets insets = new Insets(10,20,10,20);
         tableVbox.setMargin(tableView,insets);
         tableVbox.setMargin(tableName,insets);
         tableVbox.setMargin(btnNew,insets);
-        tableVbox.setMargin(btnReady,insets);
-        tableVbox.getChildren().addAll(tableName,btnNew, tableView,btnReady);
+        HBox hBox = new HBox();
+        hBox.setMargin(cancelBtn,insets);
+        hBox.setMargin(btnReady,insets);
+        hBox.getChildren().addAll(btnReady,cancelBtn);
+        tableVbox.setMargin(hBox,insets);
+        tableVbox.getChildren().addAll(tableName,btnNew, tableView,hBox);
     }
 
     EventHandler<ActionEvent> btnNewHandler =

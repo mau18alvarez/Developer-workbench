@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -35,6 +36,8 @@ public class InsertUI implements Initializable{
     Button btnReady;
     @FXML
     ComboBox tablesDropDown;
+    @FXML
+    Button cancelBtn;
 
     private TextField name;
     final BooleanProperty firstTime = new SimpleBooleanProperty(true);
@@ -124,6 +127,17 @@ public class InsertUI implements Initializable{
                     }
                 };
         btnReady.setOnAction(btnReadyHandler);
+
+        EventHandler<ActionEvent> cancelBtnHandler =
+                new EventHandler<ActionEvent>(){
+
+                    @Override
+                    public void handle(ActionEvent t) {
+                        Stage stage = (Stage) insertPane.getScene().getWindow();
+                        stage.close();
+                    }
+                };
+        cancelBtn.setOnAction(cancelBtnHandler);
 
     }
 

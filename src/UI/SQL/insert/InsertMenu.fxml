@@ -10,5 +10,6 @@
       <ComboBox fx:id="tablesDropDown" layoutX="25.0" layoutY="14.0" prefWidth="150.0" />
       <VBox fx:id="insertVBox" alignment="CENTER" layoutX="25.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="550.0" spacing="10.0" />
       <Button fx:id="btnReady" layoutX="510.0" layoutY="455.0" mnemonicParsing="false" text="Ready" />
+      <Button fx:id="cancelBtn" layoutX="432.0" layoutY="455.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </Pane>

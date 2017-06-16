@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -36,6 +37,8 @@ public class UpdateUI implements Initializable {
     TextField condAttr;
     @FXML
     TextField condVal;
+    @FXML
+    Button cancelBtn;
 
     private TableView tableView = new TableView();
 
@@ -170,6 +173,17 @@ public class UpdateUI implements Initializable {
         tableView.setItems(data);
 
         updateVbox.getChildren().addAll(tableView);
+
+        EventHandler<ActionEvent> cancelBtnHandler =
+                new EventHandler<ActionEvent>(){
+
+                    @Override
+                    public void handle(ActionEvent t) {
+                        Stage stage = (Stage) updateVbox.getScene().getWindow();
+                        stage.close();
+                    }
+                };
+        cancelBtn.setOnAction(cancelBtnHandler);
 
     }
 

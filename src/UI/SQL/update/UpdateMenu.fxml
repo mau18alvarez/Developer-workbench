@@ -18,5 +18,6 @@
       <TextField fx:id="condAttr" layoutX="97.0" layoutY="304.0" />
       <Label layoutX="300.0" layoutY="309.0" text="EQUALS" />
       <TextField fx:id="condVal" layoutX="375.0" layoutY="304.0" prefHeight="31.0" prefWidth="194.0" />
+      <Button fx:id="cancelBtn" layoutX="424.0" layoutY="348.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </Pane>
