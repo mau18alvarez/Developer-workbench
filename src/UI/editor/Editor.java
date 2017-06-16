@@ -1,12 +1,11 @@
 package UI.editor;
 
 import UI.custom.DBTable;
-import javafx.event.EventHandler;
+import UI.custom.SQLTable;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -15,6 +14,8 @@ import main.Main;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -22,12 +23,13 @@ import java.util.ResourceBundle;
  */
 public class Editor implements Initializable {
 
-    @FXML
-    TreeView<String> leftmenu;
-    @FXML
-    TreeView<String> menu_tables;
-    @FXML
-    Pane StructPane;
+    @FXML TreeView<String> leftmenu;
+    @FXML Pane StructPane;
+
+    //Tables tab
+    @FXML TableView<List<String>> tvTable;
+    @FXML Label lbTableTitle;
+    @FXML ListView<SQLTable> lvTables;
 
 
 
@@ -39,7 +41,6 @@ public class Editor implements Initializable {
 
         Circle icon2 = new Circle(3);
         icon.setFill(Color.BLACK);
-
 
         DBTable dbTable = new DBTable("mierda");
         dbTable.addTableAttribute("Mierda Aguada");
@@ -66,48 +67,57 @@ public class Editor implements Initializable {
         leftmenu.setRoot(root_structure);
         leftmenu.setShowRoot(false);
 
-        leftmenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (leftmenu.getSelectionModel().getSelectedItem() != null) {
-                    switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
-                        case "Table": {
-                            try {
-                                leftmenu.getSelectionModel().clearSelection();
-                                Main.createTableStage();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            break;
+        leftmenu.setOnMouseClicked(event -> {
+            if (leftmenu.getSelectionModel().getSelectedItem() != null) {
+                switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
+                    case "Table": {
+                        try {
+                            leftmenu.getSelectionModel().clearSelection();
+                            Main.createTableStage();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+                        break;
                     }
                 }
             }
         });
 
-        //Para los de Structure
-        TreeItem<String> root_table = new TreeItem<>("Root", icon);
-        TreeItem<String> Metadata = new TreeItem<>("Metadata", new Rectangle(4, 4));
+        //Tables tab
+        List<String> cols = Arrays.asList("Fname","Pene","Cancer");
+        List<List<String>> vals = Arrays.asList(
+                Arrays.asList("Tetito","penecito","mucho"),
+                Arrays.asList("ASDAS","fhdhd","hfdj"),
+                Arrays.asList("Andrecito","chimadito","negro"),
+                Arrays.asList("fjvadas","vfdssdhjf","vdvdfv"),
+                Arrays.asList("dfdf","iifv","4df54"));
+        SQLTable sqlTable = new SQLTable("Penecidad",cols,vals);
+        updateTableTree(sqlTable);
+    }
 
-
-        root_table.getChildren().addAll(Metadata);
-
-        menu_tables.setRoot(root_table);
-        menu_tables.setShowRoot(false);
-
-        menu_tables.getSelectionModel().selectedItemProperty()
-                .addListener((v, oldValue, newValue) -> {
-                    switch (newValue.getValue()) {
-                        case "Metadata": {
-                            try {
-                                Main.createMetadata();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                        }
-                    }
-                });
+    public void updateTableTree(SQLTable sqlTable){
+        lbTableTitle.setText(sqlTable.getTitle());
+        tvTable.getColumns().clear();
+        int c = 0;
+        for (String column : sqlTable.getColumns()){
+            TableColumn<List<String>,String> col = new TableColumn<>(column);
+            final int num =c;
+            col.setCellValueFactory(data -> {
+                List<String> rowValues = data.getValue();
+                String cellValue ;
+                if (num < rowValues.size()) {
+                    cellValue = rowValues.get(num);
+                } else {
+                    cellValue = "" ;
+                }
+                return new ReadOnlyStringWrapper(cellValue);
+            });
+            tvTable.getColumns().add(col);
+            c++;
+        }
+        for (List<String> values : sqlTable.getValues()) {
+            tvTable.getItems().add(values);
+        }
     }
 
     @FXML

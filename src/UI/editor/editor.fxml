@@ -2,18 +2,22 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="aBorderPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.editor.Editor">
+<BorderPane fx:id="aBorderPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.editor.Editor">
     <padding>
         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
     </padding>
@@ -59,34 +63,27 @@
                <content>
                   <BorderPane>
                      <center>
-                        <VBox prefHeight="160.0" prefWidth="720.0">
+                        <VBox alignment="CENTER">
                            <children>
-                              <ScrollPane pannable="true" prefHeight="430.0" prefViewportHeight="400.0" prefViewportWidth="400.0" prefWidth="1189.0" VBox.vgrow="ALWAYS">
-                                 <content>
-                                    <Pane fx:id="aDrawPane1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8000.0" prefWidth="8000.0" />
-                                 </content>
-                              </ScrollPane>
-                              <VBox alignment="CENTER" fillWidth="false" prefHeight="21.0" prefWidth="213.0" VBox.vgrow="NEVER">
-                                 <padding>
-                                    <Insets top="8.0" />
-                                 </padding>
-                                 <children>
-                                    <Slider fx:id="zoomSlider1" max="200" min="10" value="100" />
-                                    <Label prefHeight="8.0" prefWidth="40.0" text="Zoom" />
-                                 </children>
-                              </VBox>
+                              <Label fx:id="lbTableTitle" text="Title">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tvTable" prefHeight="200.0" prefWidth="678.0" VBox.vgrow="ALWAYS">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="C1" />
+                                  <TableColumn prefWidth="75.0" text="C2" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
                            </children>
                         </VBox>
                      </center>
-                     <bottom>
-                        <VBox prefHeight="164.0" prefWidth="1264.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TextArea prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                           </children>
-                        </VBox>
-                     </bottom>
                      <left>
-                        <TreeView id="leftmenu" fx:id="menu_tables" prefHeight="495.0" prefWidth="252.0" BorderPane.alignment="CENTER" />
+                        <ListView fx:id="lvTables" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                      </left>
                   </BorderPane>
                </content>
