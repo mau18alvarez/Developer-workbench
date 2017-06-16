@@ -29,6 +29,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import javax.swing.*;
+
 
 public class JavaFXDynTable implements Initializable {
 
@@ -226,21 +228,29 @@ public class JavaFXDynTable implements Initializable {
 
                 @Override
                 public void handle(ActionEvent t) {
-                    String str = "CREATE TABLE "+tableName.getText()+" (";
+                    String str = "";
+                    if(!isEmpty(tableName.getText())) {
+                        str = "CREATE TABLE " + tableName.getText() + " (";
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The table's name is required." , "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     for(Record record : data){
-                        if(record.getValue_0() != "-" && record.getValue_0() != "")
+                        if(!isEmpty(record.getValue_0().toString()))
                             str += record.getValue_0()+" ";
-                        if(record.getValue_1() != "-" && record.getValue_1() != "")
+                        if(!isEmpty(record.getValue_1().toString()))
                             str += record.getValue_1()+" ";
-                        if(record.getValue_2() != "-" && record.getValue_2() != "")
+                        if(!isEmpty(record.getValue_2().toString()))
                             str += record.getValue_2()+" ";
-                        if(record.getValue_3() != "-" && record.getValue_3() != "")
+                        if(!isEmpty(record.getValue_3().toString()))
                             str += record.getValue_3()+" ";
-                        if(record.getValue_4() != "-" && record.getValue_4() != "")
+                        if(!isEmpty(record.getValue_4().toString()))
                             str += record.getValue_4()+" ";
                         str = str.substring(0, str.length()-1);
-                        str += ";";
+                        str += ",";
                     }
+                    str = str.substring(0, str.length()-1);
                     str += ");";
                     SocketConnection.getInstance().sendMessage(str);
                     Stage stage = (Stage) tableView.getScene().getWindow();
@@ -320,6 +330,13 @@ public class JavaFXDynTable implements Initializable {
         private String getString() {
             return getItem() == null ? "" : getItem().toString();
         }
+    }
+
+    private boolean isEmpty(String str){
+        if(!str.matches("") && !str.matches(" ") && !str.matches("-")){
+            return false;
+        }
+        return true;
     }
 
 }
