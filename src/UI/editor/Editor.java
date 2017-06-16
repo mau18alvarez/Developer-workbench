@@ -143,13 +143,21 @@ public class Editor implements Initializable {
                                 }
                                 break;
                             }
+                            case "Update":{
+                                leftmenu.getSelectionModel().clearSelection();
+                                try {
+                                    Main.showUpdateUI();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
                         }
                     }
                 }
             }
         });
     }
-
     @FXML
     public void onTreeClick(){
 

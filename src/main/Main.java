@@ -108,6 +108,18 @@ public class Main extends Application {
         tableStage.showAndWait();
     }
 
+    public static void showUpdateUI() throws IOException{
+        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/update/UpdateMenu.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Update");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(pane,600,400);
+        tableStage.setScene(scene);
+        tableStage.setResizable(false);
+        tableStage.showAndWait();
+    }
+
 
     public static void main(String[] args) {
         launch(args);
