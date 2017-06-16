@@ -2,17 +2,14 @@ package UI.editor;
 
 import UI.custom.CustomStructurePane;
 import UI.custom.NodesPane;
+import UI.custom.SQLTable;
 import UI.custom.ZoomablePane;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,6 +18,8 @@ import main.Main;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -28,18 +27,16 @@ import java.util.ResourceBundle;
  */
 public class Editor implements Initializable {
 
-    @FXML
-    TreeView<String> leftmenu;
-    @FXML
-    TreeView<String> menu_tables;
-    @FXML
-    Pane StructPane;
-    @FXML
-    Slider zoomSlider;
-    @FXML
-    Pane nodesPane;
-    @FXML
-    ComboBox componentsDropDown;
+    @FXML TreeView<String> leftmenu;
+    @FXML Pane StructPane;
+    @FXML Slider zoomSlider;
+    @FXML Pane nodesPane;
+    @FXML ComboBox componentsDropDown;
+
+    //Tables tab
+    @FXML TableView<List<String>> tvTable;
+    @FXML Label lbTableTitle;
+    @FXML ListView<SQLTable> lvTables;
 
 
     @Override
@@ -51,6 +48,9 @@ public class Editor implements Initializable {
         Circle icon2 = new Circle(3);
         icon.setFill(Color.BLACK);
 
+        /*DBTable dbTable = new DBTable("mierda");
+        dbTable.addTableAttribute("Mierda Aguada");
+        StructPane.getChildren().add(dbTable);*/
 
         CustomStructurePane structurePane = new CustomStructurePane();
         structurePane.setScaleX(0.5);
@@ -109,63 +109,106 @@ public class Editor implements Initializable {
         leftmenu.setRoot(root_structure);
         leftmenu.setShowRoot(false);
 
-
-        leftmenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (leftmenu.getSelectionModel().getSelectedItem() != null) {
-                    if (event.getClickCount() == 2) {
-                        switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
-                            case "Table": {
-                                try {
-                                    leftmenu.getSelectionModel().clearSelection();
-                                    Main.createTableStage();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            }
-                            case "Insert": {
+        leftmenu.setOnMouseClicked(event -> {
+            if (leftmenu.getSelectionModel().getSelectedItem() != null) {
+                if (event.getClickCount() == 2) {
+                    switch (leftmenu.getSelectionModel().getSelectedItem().getValue()) {
+                        case "Table": {
+                            try {
                                 leftmenu.getSelectionModel().clearSelection();
-                                try {
-                                    Main.showInsertUI();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
+                                Main.createTableStage();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                            case "Drop": {
-                                leftmenu.getSelectionModel().clearSelection();
-                                try {
-                                    Main.dropUI();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            }
-                            case "Update":{
-                                leftmenu.getSelectionModel().clearSelection();
-                                try {
-                                    Main.showUpdateUI();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            }
-                            case "Select":{
-                                leftmenu.getSelectionModel().clearSelection();
-                                try {
-                                    Main.selectUI();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            }
+                            break;
                         }
+                        case "Insert": {
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.showInsertUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                        case "Drop": {
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.dropUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                        case "Update":{
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.showUpdateUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                        case "Delete": {
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.showDeleteUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+                        case "Select":{
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.selectUI();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
+
                     }
                 }
             }
         });
+
+        //Tables tab
+        List<String> cols = Arrays.asList("Fname","Pene","Cancer");
+        List<List<String>> vals = Arrays.asList(
+                Arrays.asList("Tetito","penecito","mucho"),
+                Arrays.asList("ASDAS","fhdhd","hfdj"),
+                Arrays.asList("Andrecito","chimadito","negro"),
+                Arrays.asList("fjvadas","vfdssdhjf","vdvdfv"),
+                Arrays.asList("dfdf","iifv","4df54"));
+        SQLTable sqlTable = new SQLTable("Penecidad",cols,vals);
+        updateTableTree(sqlTable);
+    }
+
+    public void updateTableTree(SQLTable sqlTable){
+        lbTableTitle.setText(sqlTable.getTitle());
+        tvTable.getColumns().clear();
+        int c = 0;
+        for (String column : sqlTable.getColumns()){
+            TableColumn<List<String>,String> col = new TableColumn<>(column);
+            final int num =c;
+            col.setCellValueFactory(data -> {
+                List<String> rowValues = data.getValue();
+                String cellValue ;
+                if (num < rowValues.size()) {
+                    cellValue = rowValues.get(num);
+                } else {
+                    cellValue = "" ;
+                }
+                return new ReadOnlyStringWrapper(cellValue);
+            });
+            tvTable.getColumns().add(col);
+            c++;
+        }
+        for (List<String> values : sqlTable.getValues()) {
+            tvTable.getItems().add(values);
+        }
+
     }
     @FXML
     public void onTreeClick(){

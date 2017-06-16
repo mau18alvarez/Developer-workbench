@@ -120,8 +120,8 @@ public class Main extends Application {
         tableStage.showAndWait();
     }
 
-    public static void selectUI() throws IOException{
-        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/Select/SelectMenu.fxml"));
+    public static void selectUI() throws IOException {
+        Pane pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/Select/SelectMenu.fxml"));
         Stage tableStage = new Stage();
         tableStage.setTitle("Select");
         tableStage.initModality(Modality.NONE);
@@ -129,6 +129,17 @@ public class Main extends Application {
         Scene scene = new Scene(pane);
         tableStage.setScene(scene);
         tableStage.setResizable(true);
+    }
+
+    public static void showDeleteUI() throws IOException{
+        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/delete/DeleteMenu.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Delete");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(pane,600,400);
+        tableStage.setScene(scene);
+        tableStage.setResizable(false);
         tableStage.showAndWait();
     }
 
