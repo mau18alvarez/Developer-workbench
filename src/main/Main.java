@@ -120,6 +120,18 @@ public class Main extends Application {
         tableStage.showAndWait();
     }
 
+    public static void showDeleteUI() throws IOException{
+        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/delete/DeleteMenu.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Delete");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(pane,600,400);
+        tableStage.setScene(scene);
+        tableStage.setResizable(false);
+        tableStage.showAndWait();
+    }
+
 
     public static void main(String[] args) {
         launch(args);

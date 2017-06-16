@@ -152,6 +152,15 @@ public class Editor implements Initializable {
                                 }
                                 break;
                             }
+                            case "Delete":{
+                                leftmenu.getSelectionModel().clearSelection();
+                                try {
+                                    Main.showDeleteUI();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
                         }
                     }
                 }

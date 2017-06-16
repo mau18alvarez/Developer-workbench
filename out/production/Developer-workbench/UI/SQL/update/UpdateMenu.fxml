@@ -14,7 +14,7 @@
       <TextField fx:id="tableName" layoutX="148.0" layoutY="24.0" prefHeight="31.0" prefWidth="368.0" promptText="Table Name" />
       <Label layoutX="25.0" layoutY="29.0" prefHeight="21.0" prefWidth="105.0" text="Update Table" />
       <Label layoutX="26.0" layoutY="309.0" prefHeight="21.0" prefWidth="71.0" text="WHERE" />
-      <Button fx:id="addBtn" layoutX="26.0" layoutY="55.0" mnemonicParsing="false" text="AddATtribute" />
+      <Button fx:id="addBtn" layoutX="26.0" layoutY="55.0" mnemonicParsing="false" text="Add Attribute" />
       <TextField fx:id="condAttr" layoutX="97.0" layoutY="304.0" />
       <Label layoutX="300.0" layoutY="309.0" text="EQUALS" />
       <TextField fx:id="condVal" layoutX="375.0" layoutY="304.0" prefHeight="31.0" prefWidth="194.0" />
