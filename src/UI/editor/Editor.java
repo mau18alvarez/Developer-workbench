@@ -172,6 +172,7 @@ public class Editor implements Initializable {
                 }
             }
         });
+        
 
         //Tables tab
         List<String> cols = Arrays.asList("Fname","Pene","Cancer");
