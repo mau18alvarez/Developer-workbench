@@ -96,6 +96,18 @@ public class Main extends Application {
         tableStage.showAndWait();
     }
 
+    public static void dropUI() throws IOException{
+        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/drop/DropMenu.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Drop");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(pane);
+        tableStage.setScene(scene);
+        tableStage.setResizable(true);
+        tableStage.showAndWait();
+    }
+
 
     public static void main(String[] args) {
         launch(args);
