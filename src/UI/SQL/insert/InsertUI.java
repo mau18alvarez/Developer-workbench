@@ -133,8 +133,16 @@ public class InsertUI implements Initializable{
                         msg += ");";
                         System.out.println(msg);
                         String response = SocketConnection.getInstance().request(msg);
-                        JOptionPane.showMessageDialog(null, response, "Error",
-                                JOptionPane.PLAIN_MESSAGE);
+                        if(response.contains("Error")){
+                            JOptionPane.showMessageDialog(null, response, "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(null, response, "Response",
+                                    JOptionPane.PLAIN_MESSAGE);
+                            tablesDropDown.getSelectionModel().clearSelection();
+                            insertVBox.getChildren().clear();
+                        }
+
                     }
                 };
         btnReady.setOnAction(btnReadyHandler);
