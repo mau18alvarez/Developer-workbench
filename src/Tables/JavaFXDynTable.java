@@ -34,6 +34,9 @@ import javax.swing.*;
 
 public class JavaFXDynTable implements Initializable {
 
+
+    protected final String[] DATATYPES = {"int","string","double","float","char"};
+
     private TableView tableView = new TableView();
     private Button btnNew = new Button("Add Table Attribute");
     private Button btnReady = new Button("Ready");
@@ -239,12 +242,21 @@ public class JavaFXDynTable implements Initializable {
                     for(Record record : data){
                         if(!isEmpty(record.getValue_0().toString()))
                             str += record.getValue_0()+" ";
-                        if(!isEmpty(record.getValue_1().toString()))
-                            str += record.getValue_1()+" ";
-                        if(!isEmpty(record.getValue_2().toString()))
-                            str += record.getValue_2()+" ";
-                        if(!isEmpty(record.getValue_3().toString()))
-                            str += record.getValue_3()+" ";
+                        if(!isEmpty(record.getValue_1().toString())){
+                            if (isValidType(record.getValue_1().toString())) {
+                                str += record.getValue_1() + " ";
+                            } else {
+                                JOptionPane.showMessageDialog(null, "The data type is not valid.", "Error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                        }
+                        if(!isEmpty(record.getValue_2().toString())) {
+                            str += record.getValue_2() + " ";
+                        }
+                        if(!isEmpty(record.getValue_3().toString())) {
+                            str += record.getValue_3() + " ";
+                        }
                         if(!isEmpty(record.getValue_4().toString()))
                             str += record.getValue_4()+" ";
                         str = str.substring(0, str.length()-1);
@@ -337,6 +349,24 @@ public class JavaFXDynTable implements Initializable {
             return false;
         }
         return true;
+    }
+
+    private boolean isValidType(String dataType){
+        dataType = dataType.toLowerCase();
+        for (String str : DATATYPES){
+            if(dataType.matches(str)){
+                return true;
+            }
+        }
+        if(dataType.contains("varchar(")){
+            dataType = dataType.substring(dataType.indexOf("(")+1,dataType.length()-1);
+            System.out.println("varType: "+dataType);
+            try{
+                Float.valueOf(dataType);
+                return true;
+            }catch (Exception e){}
+        }
+        return false;
     }
 
 }
