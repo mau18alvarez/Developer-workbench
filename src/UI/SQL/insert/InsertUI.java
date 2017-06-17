@@ -19,7 +19,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
+import java.security.spec.ECField;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -115,7 +117,12 @@ public class InsertUI implements Initializable{
                             }catch (Exception e){}
                             if(!textField.getText().matches("")){
                                 System.out.println("Txt: "+textField.getText());
-                                msg += "'"+textField.getText()+"',";
+                                try{
+                                    Float.valueOf(textField.getText());
+                                    msg += textField.getText()+",";
+                                }catch (Exception e){
+                                    msg += "'"+textField.getText()+"',";
+                                }
                             }else{
                                 if(nullTexField){
                                     msg += "!,";
@@ -125,6 +132,9 @@ public class InsertUI implements Initializable{
                         msg = msg.substring(0, msg.length() - 1);
                         msg += ");";
                         System.out.println(msg);
+                        String response = SocketConnection.getInstance().request(msg);
+                        JOptionPane.showMessageDialog(null, response, "Error",
+                                JOptionPane.PLAIN_MESSAGE);
                     }
                 };
         btnReady.setOnAction(btnReadyHandler);

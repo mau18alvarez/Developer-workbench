@@ -264,7 +264,9 @@ public class JavaFXDynTable implements Initializable {
                     }
                     str = str.substring(0, str.length()-2);
                     str += ");";
-                    SocketConnection.getInstance().sendMessage(str);
+                    String result = SocketConnection.getInstance().request(str);
+                    JOptionPane.showMessageDialog(null, result, "Error",
+                            JOptionPane.PLAIN_MESSAGE);
                     Stage stage = (Stage) tableView.getScene().getWindow();
                     stage.close();
                 }
