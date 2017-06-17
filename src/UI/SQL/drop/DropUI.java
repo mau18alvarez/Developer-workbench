@@ -29,7 +29,7 @@ public class DropUI implements Initializable {
         btnReady.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 if(!isEmpty(drop_name.getText())) {
-                    String table_drop_name = String.valueOf(drop_name.getText());
+                    String table_drop_name =  "DROP TABLE " + String.valueOf(drop_name.getText());
                     SocketConnection.getInstance().sendMessage(table_drop_name);
                     //Close popup window
                     Stage stage = (Stage) btnReady.getScene().getWindow();
