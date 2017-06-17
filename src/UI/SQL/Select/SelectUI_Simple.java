@@ -128,13 +128,22 @@ public class SelectUI_Simple implements Initializable {
                                 }
                                 msg = msg.substring(0,msg.length()-2);
                                 msg += " ";
-                                msg += "FROM " + tableName.getText() + " WHERE " + tableName.getText()+"."+where_id.getText() + "=" + equals_id.getText() + ";";
+                                msg += "FROM " + tableName.getText() + " WHERE " + tableName.getText()+"."+where_id.getText() + "=";
+                                try{
+                                    Float.valueOf(equals_id.getText());
+                                    msg += equals_id.getText()+ ";";
+                                }catch (Exception e){
+                                    msg += "'"+ equals_id.getText() + "';";
+                                }
+
                                 String response = SocketConnection.getInstance().request(msg);
                                 if(response.contains("Error")){
-                                    JOptionPane.showMessageDialog(null, response , "Response",
-                                            JOptionPane.PLAIN_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, response , "Error",
+                                            JOptionPane.ERROR_MESSAGE);
                                     return;
                                 }else{
+                                    JOptionPane.showMessageDialog(null, response , "Response",
+                                            JOptionPane.PLAIN_MESSAGE);
                                     showSelect(response);
                                 }
 
