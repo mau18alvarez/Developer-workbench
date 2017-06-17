@@ -1,5 +1,6 @@
 package UI.editor;
 
+import Networking.Socket.SocketConnection;
 import UI.custom.CustomStructurePane;
 import UI.custom.NodesPane;
 import UI.custom.SQLTable;
@@ -18,6 +19,7 @@ import main.Main;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,7 +38,7 @@ public class Editor implements Initializable {
     @FXML TableView<List<String>> tvTable;
     @FXML Label lbTableTitle;
     @FXML ListView<SQLTable> lvTables;
-
+    @FXML TabPane tabPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -174,10 +176,18 @@ public class Editor implements Initializable {
                 }
             }
         });
-        
+
+        initializeListView();
+
+        tabPane.setOnMouseClicked(event -> {
+            if (tabPane.getSelectionModel().getSelectedItem().getText().equals("Tables")){
+                initializeListView();
+            }
+        });
+
 
         //Tables tab
-        List<String> cols = Arrays.asList("Fname","Pene","Cancer");
+        /*List<String> cols = Arrays.asList("Fname","Pene","Cancer");
         List<List<String>> vals = Arrays.asList(
                 Arrays.asList("Tetito","penecito","mucho"),
                 Arrays.asList("ASDAS","fhdhd","hfdj"),
@@ -185,12 +195,20 @@ public class Editor implements Initializable {
                 Arrays.asList("fjvadas","vfdssdhjf","vdvdfv"),
                 Arrays.asList("dfdf","iifv","4df54"));
         SQLTable sqlTable = new SQLTable("Penecidad",cols,vals);
-        updateTableTree(sqlTable);
+        updateTableTree(sqlTable);*/
+    }
+
+    @FXML
+    public void onListViewClick(){
+        if (lvTables.getSelectionModel().getSelectedItem() != null){
+            updateTableTree(lvTables.getSelectionModel().getSelectedItem());
+        }
     }
 
     public void updateTableTree(SQLTable sqlTable){
         lbTableTitle.setText(sqlTable.getTitle());
         tvTable.getColumns().clear();
+        tvTable.getItems().clear();
         int c = 0;
         for (String column : sqlTable.getColumns()){
             TableColumn<List<String>,String> col = new TableColumn<>(column);
@@ -213,6 +231,36 @@ public class Editor implements Initializable {
         }
 
     }
+
+    public void initializeListView(){
+        lvTables.getItems().clear();
+        String strTables = SocketConnection.getInstance().request("RequestAllTables");
+        System.out.println(strTables);
+
+        String[] Tables = strTables.split(",");
+        System.out.println(Tables[0]);
+        for (String table : Tables){
+            String[] all = table.split("\\.");
+            System.out.println("ESTO ES TABLE " + table);
+            String[] rows = all[1].split("-");
+            List<String> columns = new ArrayList<>();
+            List<List<String>> values = new ArrayList<>();
+            String[] temp = rows[0].split(";");
+            for (String tempcol : temp){
+                columns.add(tempcol.split(":")[0]);
+            }
+            for (String row : rows){
+                String[] cols = row.split(";");
+                List<String> value = new ArrayList<>();
+                for (String col : cols){
+                    value.add(col.split(":")[1]);
+                }
+                values.add(value);
+            }
+            lvTables.getItems().add(new SQLTable(all[0],columns,values));
+        }
+    }
+
     @FXML
     public void onTreeClick(){
 

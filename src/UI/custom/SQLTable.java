@@ -16,6 +16,10 @@ public class SQLTable {
         this.values = values;
     }
 
+    public String toString(){
+        return title;
+    }
+
     public List<String> getColumns() {
         return columns;
     }
