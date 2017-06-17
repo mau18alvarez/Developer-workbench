@@ -127,7 +127,7 @@ public class Main extends Application {
         tableStage.initOwner(primaryStage);
         Scene scene = new Scene(pane);
         tableStage.setScene(scene);
-        tableStage.setResizable(true);
+        tableStage.setResizable(false);
         tableStage.showAndWait();
     }
 

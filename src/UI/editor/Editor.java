@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Created by josea on 6/2/2017.
  */
 public class Editor implements Initializable {
-    
+
 
     @FXML TreeView<String> leftmenu;
     @FXML Pane StructPane;
