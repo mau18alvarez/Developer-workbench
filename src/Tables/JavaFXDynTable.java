@@ -255,7 +255,7 @@ public class JavaFXDynTable implements Initializable {
                             str += record.getValue_2() + " ";
                         }
                         if(!isEmpty(record.getValue_3().toString())) {
-                            str += record.getValue_3() + " ";
+                            str += "REFERENCES " + record.getValue_3() + " ";
                         }
                         if(!isEmpty(record.getValue_4().toString()))
                             str += record.getValue_4()+" ";
