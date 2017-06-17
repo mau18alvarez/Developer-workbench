@@ -1,5 +1,6 @@
 package UI.SQL.Select;
 
+import Networking.Socket.SocketConnection;
 import Tables.JavaFXDynTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -119,10 +120,14 @@ public class SelectUI_Simple implements Initializable {
                                         return;
                                     }
                                 }
-                                msg += "FROM " + tableName.getText() + " WHERE " + where_id.getText() + "=" + equals_id.getText();
+                                msg = msg.substring(0,msg.length()-2);
+                                msg += " ";
+                                msg += "FROM " + tableName.getText() + " WHERE " + tableName.getText()+"."+where_id.getText() + "=" + equals_id.getText() + ";";
                                 Stage stage = (Stage) readyBtn.getScene().getWindow();
                                 stage.close();
-                                System.out.println(msg);
+                                String response = SocketConnection.getInstance().request(msg);
+                                JOptionPane.showMessageDialog(null, response , "Response",
+                                        JOptionPane.PLAIN_MESSAGE);
 
                             }else{
                                 JOptionPane.showMessageDialog(null, "You need to fill all spaces" , "Error",

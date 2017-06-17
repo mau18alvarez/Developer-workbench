@@ -1,5 +1,6 @@
 package UI.SQL.update;
 
+import Networking.Socket.SocketConnection;
 import Tables.JavaFXDynTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import javax.swing.*;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -145,6 +148,9 @@ public class UpdateUI implements Initializable {
                             msg += "'"+condVal.getText()+"';";
                         }
                         System.out.println("UPDATE MSG: "+msg);
+                        String response = SocketConnection.getInstance().request(msg);
+                        JOptionPane.showMessageDialog(null, response , "Response",
+                                JOptionPane.PLAIN_MESSAGE);
                     }
                 };
         readyBtn.setOnAction(readyBtnHandler);

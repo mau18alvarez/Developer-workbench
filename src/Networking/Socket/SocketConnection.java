@@ -58,6 +58,7 @@ public class SocketConnection {
     }
 
     public String request(String msg){
+        System.out.println("REQUEST MESSAGE: "+msg);
         try {
             PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
             out.println(msg);
