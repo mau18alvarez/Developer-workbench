@@ -65,6 +65,11 @@ public class Editor implements Initializable {
         structurePane.setScaleX(0.5);
         structurePane.setScaleY(0.5);
 
+        String responce = SocketConnection.getInstance().request("RequestAllMetadata");
+        if(responce.contains("Error")){
+
+        }
+
         structurePane.addTable("MIERDA,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");
         structurePane.addTable("Mierdota,Fname-!VARCHAR(15),Pene-VARCHAR(20):FUCK.ID,Panochito-!VARCHAR(10)");
         structurePane.addTable("FUCK,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");

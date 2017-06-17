@@ -129,15 +129,13 @@ public class SelectUI_Simple implements Initializable {
                                 msg = msg.substring(0,msg.length()-2);
                                 msg += " ";
                                 msg += "FROM " + tableName.getText() + " WHERE " + tableName.getText()+"."+where_id.getText() + "=" + equals_id.getText() + ";";
-                                Stage stage = (Stage) readyBtn.getScene().getWindow();
-                                stage.close();
                                 String response = SocketConnection.getInstance().request(msg);
-                                JOptionPane.showMessageDialog(null, response , "Response",
-                                        JOptionPane.PLAIN_MESSAGE);
                                 if(response.contains("Error")){
+                                    JOptionPane.showMessageDialog(null, response , "Response",
+                                            JOptionPane.PLAIN_MESSAGE);
                                     return;
                                 }else{
-
+                                    showSelect(response);
                                 }
 
                             }else{
@@ -196,7 +194,7 @@ public class SelectUI_Simple implements Initializable {
 
     private void showSelect(String data){
 
-        System.out.println(data);
+        System.out.println("Mierda: "+data);
         GridPane gridPane = new GridPane();
 
         String[] strArr1 = data.split(",");
