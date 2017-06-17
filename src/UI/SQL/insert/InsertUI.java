@@ -1,5 +1,6 @@
 package UI.SQL.insert;
 
+import Networking.Socket.SocketConnection;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -142,8 +143,8 @@ public class InsertUI implements Initializable{
     }
 
     private void getTables(){
-        String tablesStr = "MIERDAGUADA,Fname-!VARCHAR(15),Panochito-!VARCHAR(10)|MIERDA,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)";
-        String[] tablesArr = tablesStr.split("\\|");
+        String tablesStr = SocketConnection.getInstance().request("RequestAllMetadata");
+        String[] tablesArr = tablesStr.split("\\^");
         for(String table : tablesArr){
             String[] tableArr = table.split(",");
             String Key = tableArr[0];
