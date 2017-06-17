@@ -34,6 +34,7 @@ public class Editor implements Initializable {
     @FXML Pane StructPane;
     @FXML Slider zoomSlider;
     @FXML ScrollPane nombrebonito;
+    CustomStructurePane structurePane;
     //Tables tab
     @FXML TableView<List<String>> tvTable;
     @FXML Label lbTableTitle;
@@ -61,18 +62,10 @@ public class Editor implements Initializable {
         dbTable.addTableAttribute("Mierda Aguada");
         StructPane.getChildren().add(dbTable);*/
 
-        CustomStructurePane structurePane = new CustomStructurePane();
+        structurePane = new CustomStructurePane();
         structurePane.setScaleX(0.5);
         structurePane.setScaleY(0.5);
 
-        String responce = SocketConnection.getInstance().request("RequestAllMetadata");
-        if(responce.contains("Error")){
-
-        }
-
-        structurePane.addTable("MIERDA,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");
-        structurePane.addTable("Mierdota,Fname-!VARCHAR(15),Pene-VARCHAR(20):FUCK.ID,Panochito-!VARCHAR(10)");
-        structurePane.addTable("FUCK,Fname-!VARCHAR(15),Pene-VARCHAR(20),Panochito-!VARCHAR(10)");
 
         //structurePane.connect();
         ZoomablePane zoomablePane = new ZoomablePane(structurePane);
@@ -183,10 +176,14 @@ public class Editor implements Initializable {
         });
 
         initializeListView();
+        updateMetadata();
 
         tabPane.setOnMouseClicked(event -> {
             if (tabPane.getSelectionModel().getSelectedItem().getText().equals("Tables")){
                 initializeListView();
+            }
+            if (tabPane.getSelectionModel().getSelectedItem().getText().equals("Structure")){
+                updateMetadata();
             }
         });
 
@@ -207,6 +204,19 @@ public class Editor implements Initializable {
     public void onListViewClick(){
         if (lvTables.getSelectionModel().getSelectedItem() != null){
             updateTableTree(lvTables.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    public void updateMetadata(){
+        String responce = SocketConnection.getInstance().request("RequestAllMetadata");
+        if(responce.contains("Error")){
+
+        }else{
+            String[] strArr = responce.split("\\^");
+            for(String str : strArr){
+                //System.out.println(str);
+                structurePane.addTable(str);
+            }
         }
     }
 
@@ -243,26 +253,27 @@ public class Editor implements Initializable {
         System.out.println(strTables);
 
         String[] Tables = strTables.split(",");
-        System.out.println(Tables[0]);
         for (String table : Tables){
             String[] all = table.split("\\.");
-            System.out.println("ESTO ES TABLE " + table);
-            String[] rows = all[1].split("-");
             List<String> columns = new ArrayList<>();
             List<List<String>> values = new ArrayList<>();
-            String[] temp = rows[0].split(";");
-            for (String tempcol : temp){
-                columns.add(tempcol.split(":")[0]);
-            }
-            for (String row : rows){
-                String[] cols = row.split(";");
-                List<String> value = new ArrayList<>();
-                for (String col : cols){
-                    value.add(col.split(":")[1]);
+            if (all.length != 1) {
+                System.out.println("ESTO ES TABLE " + table);
+                String[] rows = all[1].split("-");
+                String[] temp = rows[0].split(";");
+                for (String tempcol : temp) {
+                    columns.add(tempcol.split(":")[0]);
                 }
-                values.add(value);
+                for (String row : rows) {
+                    String[] cols = row.split(";");
+                    List<String> value = new ArrayList<>();
+                    for (String col : cols) {
+                        value.add(col.split(":")[1]);
+                    }
+                    values.add(value);
+                }
             }
-            lvTables.getItems().add(new SQLTable(all[0],columns,values));
+            lvTables.getItems().add(new SQLTable(all[0], columns, values));
         }
     }
 

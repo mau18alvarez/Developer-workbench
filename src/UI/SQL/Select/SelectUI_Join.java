@@ -1,19 +1,24 @@
 package UI.SQL.Select;
 
+import Networking.Socket.SocketConnection;
 import Tables.JavaFXDynTable;
 import UI.SQL.update.UpdateUI;
+import UI.custom.DBTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -35,6 +40,7 @@ public class SelectUI_Join implements Initializable{
     @FXML TextField condAttr;
     @FXML TextField condVal;
     @FXML Button cancelBtn;
+    @FXML Pane  masterPane;
 
 
     private TableView tableView = new TableView();
@@ -150,10 +156,19 @@ public class SelectUI_Join implements Initializable{
                                     }
                                 }
 
+                                msg = msg.substring(0,msg.length()-2);
+                                msg += " ";
+
                                 msg += "FROM " + table1.getText() + " JOIN " + table2.getText() + " ON " + condAttr.getText() + "=" + condVal.getText() + ";";
                                 System.out.println(msg);
-                                Stage stage = (Stage) readyBtn.getScene().getWindow();
-                                stage.close();
+                                String response = SocketConnection.getInstance().request(msg);
+                                if(msg.contains("Error")){
+                                    JOptionPane.showMessageDialog(null, response, "Error",
+                                            JOptionPane.ERROR_MESSAGE);
+                                    return;
+                                }else{
+                                    showSelect(response);
+                                }
 
                             }else{
                                 JOptionPane.showMessageDialog(null, "You need to fill all spaces" , "Error",
@@ -228,6 +243,40 @@ public class SelectUI_Join implements Initializable{
                 };
         cancelBtn.setOnAction(cancelBtnHandler);
 
+    }
+
+    private void showSelect(String data){
+
+        System.out.println("Mierda: "+data);
+        GridPane gridPane = new GridPane();
+
+        String[] strArr1 = data.split(",");
+        for(int i = 0 ; i < strArr1.length ; i++){
+            if (!strArr1[i].matches("")) {
+                String[] strArr2 = strArr1[i].split(";");
+                for (int j = 0 ; j < strArr2.length; j++) {
+                    if(!strArr2[j].matches("")) {
+                        String[] strArr3 = strArr2[j].split(":");
+                        DBTable dbTable = new DBTable(strArr3[0]);
+                        for (Node node : gridPane.getChildren()) {
+                            if (dbTable.name.matches(((DBTable) node).name)) {
+                                dbTable = (DBTable) node;
+                            }
+                        }
+                        dbTable.addTableAttribute(strArr3[1]);
+                        try {
+                            gridPane.add(dbTable, j, i);
+                        }catch (Exception e){}
+                    }
+                }
+            }
+        }
+
+        ScrollPane scrollPane = new ScrollPane();
+        masterPane.getChildren().clear();
+        masterPane.getChildren().addAll(scrollPane);
+        scrollPane.setPrefSize(scrollPane.getParent().getScene().getWidth(),scrollPane.getParent().getScene().getHeight());
+        scrollPane.setContent(gridPane);
     }
 
     class EditingCell<T> extends TableCell<XYChart.Data, T> {
