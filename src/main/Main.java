@@ -10,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.swing.text.TableView;
 import java.io.IOException;
 
 
@@ -121,9 +120,9 @@ public class Main extends Application {
     }
 
     public static void selectUI() throws IOException {
-        Pane pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/Select/SelectMenu.fxml"));
+        Pane pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/Select/Select_Simple.fxml"));
         Stage tableStage = new Stage();
-        tableStage.setTitle("Select");
+        tableStage.setTitle("Select Simple");
         tableStage.initModality(Modality.NONE);
         tableStage.initOwner(primaryStage);
         Scene scene = new Scene(pane);
@@ -131,6 +130,19 @@ public class Main extends Application {
         tableStage.setResizable(true);
         tableStage.showAndWait();
     }
+
+    public static void select_join() throws IOException{
+        Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/Select/Select_Join.fxml"));
+        Stage tableStage = new Stage();
+        tableStage.setTitle("Select Join");
+        tableStage.initModality(Modality.NONE);
+        tableStage.initOwner(primaryStage);
+        Scene scene = new Scene(pane,600,370);
+        tableStage.setScene(scene);
+        tableStage.setResizable(true);
+        tableStage.showAndWait();
+    }
+
 
     public static void showDeleteUI() throws IOException{
         Pane  pane = FXMLLoader.load(Main.class.getResource("../UI/SQL/delete/DeleteMenu.fxml"));

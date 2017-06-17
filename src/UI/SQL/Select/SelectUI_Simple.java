@@ -1,7 +1,6 @@
 package UI.SQL.Select;
 
 import Tables.JavaFXDynTable;
-import UI.SQL.update.UpdateUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 /**
  * Created by mauri on 15-Jun-17.
  */
-public class SelectUI implements Initializable {
+public class SelectUI_Simple implements Initializable {
 
 
     @FXML VBox updateVbox;
@@ -81,7 +80,7 @@ public class SelectUI implements Initializable {
 
     };
 
-    ObservableList<SelectUI.Record<String>> data = FXCollections.observableArrayList();
+    ObservableList<SelectUI_Simple.Record<String>> data = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,7 +94,7 @@ public class SelectUI implements Initializable {
                     public void handle(ActionEvent t) {
 
                         //generate new Record with random number
-                        SelectUI.Record<String> newRec = new SelectUI.Record("-","-");
+                        SelectUI_Simple.Record<String> newRec = new SelectUI_Simple.Record("-","-");
                         data.add(newRec);
 
                     }
@@ -107,12 +106,18 @@ public class SelectUI implements Initializable {
 
                     @Override
                     public void handle(ActionEvent t) {
-                        String msg = "UPDATE ";
+                        String msg = "SELECT ";
                         if(!isEmpty(tableName.getText())) {
                             if (!isEmpty(where_id.getText()) & !isEmpty(equals_id.getText())) {
                                 for (Record record : data) {
-                                    msg += record.getValue_0().toString();
-                                    msg += ", ";
+                                    if(!isEmpty(record.getValue_0().toString())) {
+                                        msg += record.getValue_0().toString();
+                                        msg += ", ";
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Null Attributes are not Allowed" , "Error",
+                                                JOptionPane.ERROR_MESSAGE);
+                                        return;
+                                    }
                                 }
                                 msg += "FROM " + tableName.getText() + " WHERE " + where_id.getText() + "=" + equals_id.getText();
                                 Stage stage = (Stage) readyBtn.getScene().getWindow();
@@ -138,7 +143,7 @@ public class SelectUI implements Initializable {
 
                     @Override
                     public TableCell call(TableColumn p) {
-                        return new SelectUI.EditingCell();
+                        return new SelectUI_Simple.EditingCell();
                     }
                 };
 

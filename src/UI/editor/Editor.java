@@ -30,9 +30,7 @@ public class Editor implements Initializable {
     @FXML TreeView<String> leftmenu;
     @FXML Pane StructPane;
     @FXML Slider zoomSlider;
-    @FXML Pane nodesPane;
-    @FXML ComboBox componentsDropDown;
-
+    @FXML ScrollPane nombrebonito;
     //Tables tab
     @FXML TableView<List<String>> tvTable;
     @FXML Label lbTableTitle;
@@ -47,6 +45,14 @@ public class Editor implements Initializable {
 
         Circle icon2 = new Circle(3);
         icon.setFill(Color.BLACK);
+
+        Circle icon3 = new Circle(3);
+        icon.setFill(Color.BLACK);
+
+        Circle icon4 = new Circle(3);
+        icon.setFill(Color.BLACK);
+
+
 
         /*DBTable dbTable = new DBTable("mierda");
         dbTable.addTableAttribute("Mierda Aguada");
@@ -69,25 +75,8 @@ public class Editor implements Initializable {
         NodesPane nPane = new NodesPane();
         nPane.setScaleX(0.5);
         nPane.setScaleY(0.5);
-        ObservableList<String> dropDownItems = FXCollections.observableArrayList();
-        dropDownItems.addAll("Disk Nodes", "Network");
-        componentsDropDown.setItems(dropDownItems);
-        componentsDropDown.valueProperty().addListener((obs, oldItem, newItem) -> {
-            switch (newItem.toString()) {
-                case "Disk Nodes": {
-                    nPane.addNodes("Disknode1°fff°mmm°mm|Disknode2°fff°mmm°mm|Disknode3°fff°mmm°mm|asdfsd°asdfsdf");
-                    nodesPane.getChildren().addAll(nPane);
-                    break;
-                }
-                case "Network": {
-                    nPane.getChildren().clear();
-                    nodesPane.getChildren().remove(nPane);
-                    System.out.println("mierdaConCaca");
-                    break;
-                }
-            }
-        });
-
+        nPane.addNodes("Disknode1°fff°mmm°mm|Disknode2°fff°mmm°mm|Disknode3°fff°mmm°mm|asdfsd°asdfsdf");
+        nombrebonito.setContent(nPane);
         //Para los de Structure
 
         TreeItem<String> root_structure = new TreeItem<>("Root", icon);
@@ -98,13 +87,17 @@ public class Editor implements Initializable {
         TreeItem<String> delete = new TreeItem<>("Delete", new Rectangle(4, 4));
         TreeItem<String> update = new TreeItem<>("Update", new Rectangle(4, 4));
 
-
         TreeItem<String> table = new TreeItem<>("Table", icon);
         TreeItem<String> index = new TreeItem<>("Index", icon2);
+
+        TreeItem<String> Simple = new TreeItem<>("Simple", icon3);
+        TreeItem<String> Join = new TreeItem<>("Join", icon4);
 
         root_structure.getChildren().addAll(create, drop, select, insert, delete, update);
 
         create.getChildren().addAll(table, index);
+
+        select.getChildren().addAll(Simple,Join);
 
         leftmenu.setRoot(root_structure);
         leftmenu.setShowRoot(false);
@@ -158,7 +151,7 @@ public class Editor implements Initializable {
                             }
                             break;
                         }
-                        case "Select":{
+                        case "Simple":{
                             leftmenu.getSelectionModel().clearSelection();
                             try {
                                 Main.selectUI();
@@ -167,7 +160,15 @@ public class Editor implements Initializable {
                             }
                             break;
                         }
-
+                        case "Join": {
+                            leftmenu.getSelectionModel().clearSelection();
+                            try {
+                                Main.select_join();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
                     }
                 }
             }
