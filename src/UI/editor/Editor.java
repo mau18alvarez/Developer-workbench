@@ -42,6 +42,8 @@ public class Editor implements Initializable {
     @FXML ListView<SQLTable> lvTables;
     @FXML TabPane tabPane;
 
+    NodesPane nPane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -74,10 +76,7 @@ public class Editor implements Initializable {
 
         zoomablePane.zoomFactorProperty().bind(zoomSlider.valueProperty());
 
-        NodesPane nPane = new NodesPane();
-        nPane.setScaleX(0.5);
-        nPane.setScaleY(0.5);
-        nPane.addNodes("Disknode1°fff°mmm°mm|Disknode2°fff°mmm°mm|Disknode3°fff°mmm°mm|asdfsd°asdfsdf");
+        nPane = new NodesPane();
         nombrebonito.setContent(nPane);
         //Para los de Structure
 
@@ -210,6 +209,7 @@ public class Editor implements Initializable {
 
     public void updateMetadata(){
         String responce = SocketConnection.getInstance().request("RequestAllMetadata");
+        System.out.println("RESPONSE: "+responce);
         if(responce.contains("Error")){
             JOptionPane.showMessageDialog(null, responce, "Error",
                     JOptionPane.PLAIN_MESSAGE);
@@ -220,6 +220,8 @@ public class Editor implements Initializable {
                 //System.out.println(str);
                 structurePane.addTable(str);
             }
+            nPane.getChildren().clear();
+            nPane.addNodes(responce);
         }
     }
 
