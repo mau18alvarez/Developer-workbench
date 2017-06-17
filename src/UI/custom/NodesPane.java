@@ -39,7 +39,7 @@ public class NodesPane extends Pane {
     }
 
     public void addNodes(String node){
-        String[] dNodes = node.split("\\|");
+        String[] dNodes = node.split("\\^");
         DBTable newDNode = new DBTable("DiskNode");
         newDNode.setStyle("-fx-padding: 10;" +
                 "-fx-border-style: solid inside;" +
