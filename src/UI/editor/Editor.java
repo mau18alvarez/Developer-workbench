@@ -89,14 +89,13 @@ public class Editor implements Initializable {
         TreeItem<String> update = new TreeItem<>("Update", new Rectangle(4, 4));
 
         TreeItem<String> table = new TreeItem<>("Table", icon);
-        TreeItem<String> index = new TreeItem<>("Index", icon2);
 
         TreeItem<String> Simple = new TreeItem<>("Simple", icon3);
         TreeItem<String> Join = new TreeItem<>("Join", icon4);
 
         root_structure.getChildren().addAll(create, drop, select, insert, delete, update);
 
-        create.getChildren().addAll(table, index);
+        create.getChildren().addAll(table);
 
         select.getChildren().addAll(Simple,Join);
 
