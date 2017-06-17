@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -11,14 +10,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="aBorderPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.editor.Editor">
+<BorderPane fx:id="aBorderPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.editor.Editor">
     <padding>
         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
     </padding>
@@ -89,25 +87,11 @@
                   </BorderPane>
                </content>
             </Tab>
-            <Tab closable="false" text="Components">
+            <Tab closable="false" text="Disk Nodes">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <ToolBar prefHeight="40.0" prefWidth="200.0">
-                          <items>
-                              <Label text="Show Components:">
-                                 <font>
-                                    <Font name="Goudy Old Style" size="21.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox fx:id="componentsDropDown" prefWidth="150.0" promptText="none" />
-                          </items>
-                        </ToolBar>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                           <content>
-                              <Pane fx:id="nodesPane" prefHeight="679.0" prefWidth="1302.0" />
-                           </content>
-                        </ScrollPane>
+                        <ScrollPane fx:id="nombrebonito" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                </content>
