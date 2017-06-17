@@ -40,20 +40,20 @@ public class NodesPane extends Pane {
 
     public void addNodes(String node){
         String[] dNodes = node.split("\\|");
+        DBTable newDNode = new DBTable("DiskNode");
+        newDNode.setStyle("-fx-padding: 10;" +
+                "-fx-border-style: solid inside;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: cyan;");
         for(String dNode : dNodes){
-            String[] nodeAttrs = dNode.split("°");
-            DBTable newDNode = new DBTable(nodeAttrs[0]);
-            for(int i = 1; i < nodeAttrs.length ; i++){
-                newDNode.addTableAttribute(nodeAttrs[i]);
-                newDNode.setStyle("-fx-padding: 10;" +
-                        "-fx-border-style: solid inside;" +
-                        "-fx-border-width: 2;" +
-                        "-fx-border-insets: 5;" +
-                        "-fx-border-radius: 5;" +
-                        "-fx-border-color: cyan;");
+            String[] nodeAttrs = dNode.split(",");
+            if(!nodeAttrs[0].matches("")) {
+                newDNode.addTableAttribute(nodeAttrs[0]);
             }
-            addNode(newDNode);
         }
+        addNode(newDNode);
     }
 
     public boolean checkCollision(DBTable a, DBTable b) {
