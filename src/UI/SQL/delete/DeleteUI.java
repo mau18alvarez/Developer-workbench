@@ -1,5 +1,6 @@
 package UI.SQL.delete;
 
+import Networking.Socket.SocketConnection;
 import Tables.JavaFXDynTable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -63,6 +64,9 @@ public class DeleteUI implements Initializable{
                             return;
                         }
                         System.out.println("Delete:"+msg);
+                        String response = SocketConnection.getInstance().request(msg);
+                        JOptionPane.showMessageDialog(null, response , "Response",
+                                JOptionPane.PLAIN_MESSAGE);
                     }
                 };
                 readyBtn.setOnAction(readyBtnHandler);
