@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import main.Main;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -210,8 +211,10 @@ public class Editor implements Initializable {
     public void updateMetadata(){
         String responce = SocketConnection.getInstance().request("RequestAllMetadata");
         if(responce.contains("Error")){
-
+            JOptionPane.showMessageDialog(null, responce, "Error",
+                    JOptionPane.PLAIN_MESSAGE);
         }else{
+            structurePane.getChildren().clear();
             String[] strArr = responce.split("\\^");
             for(String str : strArr){
                 //System.out.println(str);
